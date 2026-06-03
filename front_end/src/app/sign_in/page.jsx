@@ -1,13 +1,46 @@
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import styles from './sign_in.module.css';
 import Link from 'next/link';
 
 export default function Signin() {
+  const router = useRouter();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
+    try {
+      const response = await fetch('/api/auth/signin', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, password: password }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setError(data.message);
+        return;
+      }
+      router.push('/dashboard');
+    } finally {
+      setIsLoading(false);
+    }
+  }
   return (
     <div className={styles.container}>
       <div className={styles.containerForm}>
         <Image src="/logo.svg" alt="Logo" height={32} width={250} />
-        <form className={styles.form}>
+        {error && <div className={styles.error}>{error}</div>}
+        <form className={styles.form} onSubmit={handleSubmit}>
           <fieldset className={styles.fieldset}>
             <legend className={styles.legend}>Inscription</legend>
             <div className={styles.groupEmail}>
@@ -19,6 +52,8 @@ export default function Signin() {
                 id="email"
                 name="email"
                 className={styles.input}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -31,11 +66,17 @@ export default function Signin() {
                 id="password"
                 name="password"
                 className={styles.input}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
-            <button type="submit" className={styles.button}>
-              <span className={styles.connectWord}>Se connecter</span>
+            <button
+              type="submit"
+              className={styles.button}
+              disabled={isLoading}
+            >
+              <span className={styles.connectWord}>S'inscrire</span>
             </button>
           </fieldset>
         </form>
