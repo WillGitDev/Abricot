@@ -1,0 +1,53 @@
+{"timestamp":"00:00:01.346","source":"Server","level":"WARN","message":"⚠ Slow filesystem detected. The benchmark took 617ms. If /run/media/william/Data/WilliamDesktopD/Projet_Développeur_IA/Projet_onze_developpez_un_saas_de_gestion_de_taches_booste_a_l_ia/front_end/.next/dev is a network drive, consider moving it to a local folder.\nSee more: https://nextjs.org/docs/app/guides/local-development"}
+{"timestamp":"00:00:01.370","source":"Server","level":"WARN","message":"⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy"}
+{"timestamp":"00:00:01.472","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:02.288","source":"Server","level":"LOG","message":"------------MIDDLEWARE TRIGGED------------"}
+{"timestamp":"00:00:02.288","source":"Server","level":"LOG","message":"URL demandée : /dashboard"}
+{"timestamp":"00:00:02.288","source":"Server","level":"LOG","message":"Token détecté par le serveur : undefined"}
+{"timestamp":"00:00:02.288","source":"Server","level":"LOG","message":"Middleware: Le token n'existe pas."}
+{"timestamp":"00:00:05.302","source":"Server","level":"LOG","message":"○ Compiling / ..."}
+{"timestamp":"00:00:06.098","source":"Browser","level":"INFO","message":"%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"}
+{"timestamp":"00:00:06.579","source":"Browser","level":"WARN","message":"Image with src \"/img_login.jpg\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\"eager\"` property if this image is above the fold.\nRead more: https://nextjs.org/docs/app/api-reference/components/image#loading"}
+{"timestamp":"00:00:06.597","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mImage with src \\\"/img_login.jpg\\\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\\\"eager\\\"` property if this image is above the fold.\\nRead more: https://nextjs.org/docs/app/api-reference/components/image#loading\\u001b[39m\" \"\\u001b[2m(file:///run/media/william/Data/WilliamDesktopD/Projet_Développeur_IA/Projet_onze_developpez_un_saas_de_gestion_de_taches_booste_a_l_ia/front_end/.next/dev/static/chunks/node_modules_next_dist_115brz8._.js:2477:13)\\u001b[22m\""}
+{"timestamp":"00:00:06.598","source":"Browser","level":"WARN","message":"\u001b[33mImage with src \"/img_login.jpg\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\"eager\"` property if this image is above the fold.\nRead more: https://nextjs.org/docs/app/api-reference/components/image#loading\u001b[39m"}
+{"timestamp":"00:00:06.649","source":"Browser","level":"WARN","message":"Image with src \"/img_login.jpg\" has \"fill\" but is missing \"sizes\" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes"}
+{"timestamp":"00:00:06.654","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mImage with src \\\"/img_login.jpg\\\" has \\\"fill\\\" but is missing \\\"sizes\\\" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes\\u001b[39m\" \"\\u001b[2m(file:///run/media/william/Data/WilliamDesktopD/Projet_Développeur_IA/Projet_onze_developpez_un_saas_de_gestion_de_taches_booste_a_l_ia/front_end/.next/dev/static/chunks/node_modules_next_dist_115brz8._.js:2477:13)\\u001b[22m\""}
+{"timestamp":"00:00:06.654","source":"Browser","level":"WARN","message":"\u001b[33mImage with src \"/img_login.jpg\" has \"fill\" but is missing \"sizes\" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes\u001b[39m"}
+{"timestamp":"00:00:21.751","source":"Server","level":"LOG","message":"------------MIDDLEWARE TRIGGED------------"}
+{"timestamp":"00:00:21.754","source":"Server","level":"LOG","message":"URL demandée : /dashboard"}
+{"timestamp":"00:00:21.754","source":"Server","level":"LOG","message":"Token détecté par le serveur : undefined"}
+{"timestamp":"00:00:21.754","source":"Server","level":"LOG","message":"Middleware: Le token n'existe pas."}
+{"timestamp":"00:00:22.089","source":"Browser","level":"INFO","message":"%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"}
+{"timestamp":"00:00:22.259","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mImage with src \\\"/img_login.jpg\\\" has \\\"fill\\\" but is missing \\\"sizes\\\" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes\\u001b[39m\" \"\\u001b[2m(file:///run/media/william/Data/WilliamDesktopD/Projet_Développeur_IA/Projet_onze_developpez_un_saas_de_gestion_de_taches_booste_a_l_ia/front_end/.next/dev/static/chunks/node_modules_next_dist_115brz8._.js:2477:13)\\u001b[22m\""}
+{"timestamp":"00:00:22.259","source":"Browser","level":"WARN","message":"\u001b[33mImage with src \"/img_login.jpg\" has \"fill\" but is missing \"sizes\" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes\u001b[39m"}
+{"timestamp":"00:00:22.259","source":"Browser","level":"WARN","message":"Image with src \"/img_login.jpg\" has \"fill\" but is missing \"sizes\" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes"}
+{"timestamp":"00:03:55.916","source":"Server","level":"LOG","message":"Route login api: l'objet data :  {}"}
+{"timestamp":"00:03:55.920","source":"Server","level":"LOG","message":"Route login api: l'objet response : {}"}
+{"timestamp":"00:03:55.938","source":"Server","level":"LOG","message":"------------MIDDLEWARE TRIGGED------------"}
+{"timestamp":"00:03:55.938","source":"Server","level":"LOG","message":"URL demandée : /dashboard"}
+{"timestamp":"00:03:55.940","source":"Server","level":"LOG","message":"Token détecté par le serveur : {\n  name: 'token',\n  value: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjbXBxcWo5YzIwMDAwaXo3bzI0cmszMWxrIiwiZW1haWwiOiJhbGljZUBleGFtcGxlLmNvbSIsImlhdCI6MTc4MDQ2Mjk2MCwiZXhwIjoxNzgxMDY3NzYwfQ.0lVtn2uU7PthA5l5yEOzEqG5ouDr4y3GVDEONOhjYbs'\n}"}
+{"timestamp":"00:03:55.940","source":"Server","level":"LOG","message":"Middleware: Token OK, accès autorisé."}
+{"timestamp":"00:03:57.963","source":"Server","level":"LOG","message":"------------MIDDLEWARE TRIGGED------------"}
+{"timestamp":"00:03:57.963","source":"Server","level":"LOG","message":"URL demandée : /projects"}
+{"timestamp":"00:03:57.963","source":"Server","level":"LOG","message":"Token détecté par le serveur : {\n  name: 'token',\n  value: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjbXBxcWo5YzIwMDAwaXo3bzI0cmszMWxrIiwiZW1haWwiOiJhbGljZUBleGFtcGxlLmNvbSIsImlhdCI6MTc4MDQ2Mjk2MCwiZXhwIjoxNzgxMDY3NzYwfQ.0lVtn2uU7PthA5l5yEOzEqG5ouDr4y3GVDEONOhjYbs'\n}"}
+{"timestamp":"00:03:57.964","source":"Server","level":"LOG","message":"Middleware: Token OK, accès autorisé."}
+{"timestamp":"00:04:18.234","source":"Server","level":"LOG","message":"------------MIDDLEWARE TRIGGED------------"}
+{"timestamp":"00:04:18.235","source":"Server","level":"LOG","message":"URL demandée : /dashboard"}
+{"timestamp":"00:04:18.235","source":"Server","level":"LOG","message":"Token détecté par le serveur : undefined"}
+{"timestamp":"00:04:18.235","source":"Server","level":"LOG","message":"Middleware: Le token n'existe pas."}
+{"timestamp":"00:10:25.616","source":"Server","level":"LOG","message":"✓ Compiled in 87ms"}
+{"timestamp":"00:10:52.164","source":"Server","level":"LOG","message":"Route login api: l'objet data :  {}"}
+{"timestamp":"00:10:52.166","source":"Server","level":"LOG","message":"Route login api: l'objet response : {}"}
+{"timestamp":"00:10:52.239","source":"Server","level":"LOG","message":"------------MIDDLEWARE------------"}
+{"timestamp":"00:10:52.239","source":"Server","level":"LOG","message":"URL demandée : /dashboard"}
+{"timestamp":"00:10:52.240","source":"Server","level":"LOG","message":"Token détecté par le serveur : {\n  name: 'token',\n  value: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjbXBxcWo5YzIwMDAwaXo3bzI0cmszMWxrIiwiZW1haWwiOiJhbGljZUBleGFtcGxlLmNvbSIsImlhdCI6MTc4MDQ2MzM3NiwiZXhwIjoxNzgxMDY4MTc2fQ.z1K7YVYa3oCGWPUbDQXz-sj_kl7BR_iJd8BBDBceW6s'\n}"}
+{"timestamp":"00:10:52.240","source":"Server","level":"LOG","message":"Middleware: Token OK, accès autorisé."}
+{"timestamp":"00:10:54.301","source":"Server","level":"LOG","message":"------------MIDDLEWARE------------"}
+{"timestamp":"00:10:54.302","source":"Server","level":"LOG","message":"URL demandée : /projects"}
+{"timestamp":"00:10:54.302","source":"Server","level":"LOG","message":"Token détecté par le serveur : {\n  name: 'token',\n  value: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjbXBxcWo5YzIwMDAwaXo3bzI0cmszMWxrIiwiZW1haWwiOiJhbGljZUBleGFtcGxlLmNvbSIsImlhdCI6MTc4MDQ2MzM3NiwiZXhwIjoxNzgxMDY4MTc2fQ.z1K7YVYa3oCGWPUbDQXz-sj_kl7BR_iJd8BBDBceW6s'\n}"}
+{"timestamp":"00:10:54.302","source":"Server","level":"LOG","message":"Middleware: Token OK, accès autorisé."}
+{"timestamp":"00:11:38.380","source":"Server","level":"LOG","message":"------------MIDDLEWARE------------"}
+{"timestamp":"00:11:38.381","source":"Server","level":"LOG","message":"URL demandée : /projects"}
+{"timestamp":"00:11:38.383","source":"Server","level":"LOG","message":"Token détecté par le serveur : {\n  name: 'token',\n  value: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjbXBxcWo5YzIwMDAwaXo3bzI0cmszMWxrIiwiZW1haWwiOiJhbGljZUBleGFtcGxlLmNvbSIsImlhdCI6MTc4MDQ2MzM3NiwiZXhwIjoxNzgxMDY4MTc2fQ.z1K7YVYa3oCGWPUbDQXz-sj_kl7BR_iJd8BBDBceW6s'\n}"}
+{"timestamp":"00:11:38.383","source":"Server","level":"LOG","message":"Middleware: Token OK, accès autorisé."}
+{"timestamp":"00:11:38.385","source":"Server","level":"LOG","message":"✓ Compiled in 94ms"}

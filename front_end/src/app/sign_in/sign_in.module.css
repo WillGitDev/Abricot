@@ -1,0 +1,87 @@
+.container{
+  display: flex;
+} 
+
+.containerImg{
+  width: 60%;
+  height: 100vh;
+  position: relative;
+}
+
+.img{
+  object-fit: cover;
+}
+
+.containerForm{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 40%;
+}
+
+.form{
+  display: flex;
+  justify-content: center;
+  height: 300px;
+}
+.fieldset{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 23px;
+  height: 100%;
+}
+
+.legend{
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-xxl);
+  color: var(--orange-dark);
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.fieldset{
+  border: none;
+}
+
+.groupEmail, .groupPassword{
+  display: flex;
+  flex-direction: column;
+}
+
+.label{
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+}
+
+.button{
+  width: 250px;
+  min-height: 50px;
+}
+
+.input{
+  width: 280px;
+  height: 50px;
+  border-color: var(--grey-light);
+  border-radius: var(--radius-sm);
+}
+
+.connectWord{
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-regular);
+}
+
+.createAccount{
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+  color: var(--orange-dark);
+}
+
+.noAccountText{
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+}

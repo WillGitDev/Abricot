@@ -1,25 +1,39 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --light_orange: #ffe8d9;
-  --dark_orange: #d3590b;
-  --green_light: #f1fff7;
+  /* --------Colors -------- */
+  --orange-light: #ffe8d9;
+  --orange-dark: #d3590b;
+  --green-light: #f1fff7;
   --green: #27ae60;
-  --red_light: #ffe0e0;
+  --red-light: #ffe0e0;
   --red: #ef4444;
-  --orange_light: #fff0d7;
+  --orange-medium: #fff0d7;
   --orange: #e08d00;
-  --blue_light: #e0ecff;
+  --blue-light: #e0ecff;
   --blue: #3b82f6;
-  --grey_light: #e5e7eb;
+  --grey-light: #e5e7eb;
   --grey: #6b7280;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* --------Border Radius -------- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 50px;
+  /* --------Font Sizes -------- */
+  /* 10px */
+  --font-size-xs: 0.625rem;
+  /* 12px */
+  --font-size-sm: 0.75rem;
+  /* 14px */
+  --font-size-md: 0.875rem; 
+  /* 16px */
+  --font-size-lg: 1rem;
+  /* 18px */
+  --font-size-xl: 1.125rem;
+  /* 40px */
+  --font-size-xxl: 2.5rem; 
+  /* --------Font Weights -------- */
+  --font-weight-regular: 400;
+  --font-weight-medium: 600;
+  --font-weight-bold: 700;
 }
 
 html {
@@ -36,8 +50,6 @@ body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -54,8 +66,14 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  border-radius: var(--radius-lg);
+  border: none;
+  
 }
