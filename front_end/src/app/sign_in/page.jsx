@@ -82,7 +82,7 @@ export default function Signin() {
         </form>
         <p>
           <span className={styles.noAccountText}>Déjà inscrit ?</span>{' '}
-          <Link href="/sign_in" className={styles.createAccount}>
+          <Link href="/" className={styles.createAccount}>
             Se connecter
           </Link>
         </p>

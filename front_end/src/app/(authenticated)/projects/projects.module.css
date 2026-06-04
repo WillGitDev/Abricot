@@ -1,0 +1,15 @@
+.container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttonCreate{
+    height: 50px;
+    width: 180px;
+}
+
+.h1{
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-xl);
+    margin-bottom: 20px;
+}
