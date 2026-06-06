@@ -1,4 +1,4 @@
-.container{
+.long{
     display: grid;
     grid-template-columns: 1fr 1fr;
     height: 160px;
@@ -8,7 +8,15 @@
     border-radius: var(--radius-lg);
 }
 
-.containerInfoTasks{
+.carre{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    height: 230px;
+    width: 370px;
+    border: 1px solid var(--grey-light);
+    border-radius: var(--radius-lg);
+    padding: 15px 20px;
 }
 
 .containerInfoProject{
@@ -17,20 +25,57 @@
     align-items: center;
 }
 
-.buttonSeeTasks{
+.containerInfoProjectCarre{
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.buttonSize{
     height: 50px;
     width: 120px;
+}
+
+.buttonSeeTasks{
     justify-self: end;
     align-self: flex-end;
 }
 
-.label{
+.buttonSeeTasksCarre{
+    justify-self: start;
+    align-self: flex-start;
+}
+
+.labelSize{
     height: 25px;
     width: 100px;
+}
+
+.label{
+    justify-self: end;
+    align-self: flex-start;
+}
+
+.labelCarre{
     justify-self: end;
     align-self: flex-start;
 }
 
 .txtGrey{
     color: var(--grey);
+}
+
+.h3{
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-xl);
+    margin-bottom: 10px;
+}
+
+.description{
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-regular);
+}
+
+.infoProjectFont{
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-sm);
 }

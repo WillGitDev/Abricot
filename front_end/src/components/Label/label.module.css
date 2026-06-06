@@ -27,3 +27,8 @@
     color: var(--orange-dark);
     background-color: var(--orange-light);
 }
+
+.label{
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-md);
+}

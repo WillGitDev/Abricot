@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 export default function useTasks() {
   const [tasks, setTasks] = useState(null);
+  const [userTasks, setUserTasks] = useState(null);
   const [isLoadingTasks, setIsLoadingTasks] = useState(true);
   const [errorTasks, setErrorTasks] = useState(null);
 
@@ -19,6 +20,7 @@ export default function useTasks() {
           return;
         }
         setTasks(data);
+        setUserTasks(data.data.tasks);
       } catch (error) {
         setErrorTasks('Erreur lors de la récupération des tâches : ', error);
       } finally {
@@ -27,5 +29,5 @@ export default function useTasks() {
     }
     fetchTasks();
   }, []);
-  return { tasks, errorTasks, isLoadingTasks };
+  return { tasks, userTasks, errorTasks, isLoadingTasks };
 }
