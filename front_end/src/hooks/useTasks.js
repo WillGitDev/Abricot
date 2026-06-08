@@ -16,7 +16,9 @@ export default function useTasks() {
         const data = await response.json();
 
         if (!response.ok) {
-          setErrorTasks(data.message || 'Erreur de récupération des tâches.');
+          setErrorTasks(
+            data.message || 'Erreur lors de la récupération des tâches.'
+          );
           return;
         }
         setTasks(data);

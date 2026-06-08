@@ -43,7 +43,13 @@ export default function ListTasks({ tasks, cardClass }) {
             </button>
           </div>
         </div>
-        <CardTasks tasks={tasks} variant={cardClass} />
+        <div className={styles.containerTasks}>
+          {tasks.map((task) => (
+            <div className={styles.containerTasks} key={task.id}>
+              <CardTasks task={task} variant={cardClass} />
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

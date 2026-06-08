@@ -3,11 +3,13 @@ import CardTasks from '@components/CardTasks';
 import CounterTasks from '@components/CounterTasks';
 
 export default function KanbanTasks({ tasks }) {
+  console.log('La tâche pour le kanban :', tasks);
   const tasksTodo = tasks.TODO || [];
   const tasksInProgress = tasks.IN_PROGRESS || [];
   const tasksDone = tasks.DONE || [];
   console.log('La grandeur du tableau : ', tasksDone);
   console.log('Le tasks todo :', tasksTodo);
+  console.log('Le task done', tasksDone);
   return (
     <div className={styles.container}>
       <div className={`${styles.todo} ${styles.status}`}>
@@ -16,7 +18,9 @@ export default function KanbanTasks({ tasks }) {
           <CounterTasks nbrTasks={tasksTodo.length} />
         </div>
         <div className={styles.containerTasks}>
-          <CardTasks tasks={tasksTodo} variant="" />
+          {tasksTodo.map((task) => (
+            <CardTasks task={task} variant="" key={task.id} />
+          ))}
         </div>
       </div>
       <div className={`${styles.status} ${styles.inProgress}`}>
@@ -25,7 +29,9 @@ export default function KanbanTasks({ tasks }) {
           <CounterTasks nbrTasks={tasksInProgress.length} />
         </div>
         <div className={styles.containerTasks}>
-          <CardTasks tasks={tasksInProgress} variant="" />
+          {tasksInProgress.map((task) => (
+            <CardTasks task={task} variant="" key={task.id} />
+          ))}
         </div>
       </div>
       <div className={`${styles.status} ${styles.end}`}>
@@ -33,7 +39,9 @@ export default function KanbanTasks({ tasks }) {
           <h2 className={styles.title}>Terminées</h2>
           <CounterTasks nbrTasks={tasksDone.length} />
         </div>
-        <CardTasks tasks={tasksDone} variant="" />
+        {tasksDone.map((task) => (
+          <CardTasks task={task} variant="" key={task.id} />
+        ))}
       </div>
     </div>
   );

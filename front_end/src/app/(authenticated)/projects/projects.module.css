@@ -1,6 +1,8 @@
 .container{
     display: flex;
     justify-content: space-between;
+    width: 100%;
+    margin-top: 100px;
 }
 
 .buttonCreate{
@@ -12,4 +14,14 @@
     font-weight: var(--font-weight-medium);
     font-size: var(--font-size-xl);
     margin-bottom: 20px;
+}
+
+.containerProject{
+    width: 100%;
+}
+
+.containerTopBar{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
 }

@@ -1,0 +1,104 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 380px;
+    height: 350px;
+    border: 1px solid var(--grey-light);
+    border-radius: var(--radius-lg);
+    padding: 30px;
+}
+
+.containerTitle{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.titleProject{
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-xl);
+}
+
+.description{
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-md);
+    color: var(--grey);
+}
+
+.progressText{
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-sm);
+    color: var(--grey);
+}
+
+.progressBar{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 50px 0;
+}
+
+.endTasks{
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-xs);
+    color: var(--grey);
+}
+
+.containerTitleProgressBar{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.teams{
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.teamsNumber{
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-xs);
+    color: var(--grey);
+}
+
+.containerOwners{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.labelOwner{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    width: 120px;
+    border-radius: var(--radius-xl);
+    background-color: var(--orange-light);
+}
+
+.textLabel{
+    color: var(--orange-dark);
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-md);
+}
+
+.projectPartners{
+    display: flex;
+    align-items: center;
+}
+
+.userInitial{
+    border-radius: var(--radius-xl);
+    border: 2px solid white;
+}
+
+.userInitial:not(:first-child){
+    margin-left: -12px;
+}
+
+.progress{
+    width: 100%;
+}

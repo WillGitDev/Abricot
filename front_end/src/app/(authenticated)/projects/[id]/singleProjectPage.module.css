@@ -1,0 +1,50 @@
+.container{
+
+}
+
+.containerTopBar{
+    display: flex;
+
+}
+
+.buttonReturn{
+    height: 60px;
+    width: 60px;
+    background-color: white;
+}
+
+.containerTitleProject{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.h2{
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-xl);
+    
+}
+
+.h3{
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-);
+    color: var(--grey);
+}
+
+.buttonCreateTask{
+    height: 50px;
+    width: 140px;
+}
+
+.buttonIa{
+    display: flex;
+    gap: 5px;
+    height: 50px;
+    width: 95px;
+    background-color: var(--orange-dark);
+}
+
+.iaText{
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-lg);
+}

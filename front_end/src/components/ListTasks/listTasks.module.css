@@ -48,6 +48,8 @@
     background-color: transparent;
 }
 
-.logoGlass{
-    
+.containerTasks{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }

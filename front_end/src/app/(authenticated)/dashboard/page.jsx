@@ -9,6 +9,7 @@ import { sortTasksByPriority } from '@/utils/sortTasksByPriority';
 import ListTasks from '@components/ListTasks';
 import KanbanTasks from '@components/KanbanTasks';
 import { sortTasksByStatus } from '@/utils/sortTasksByStatus';
+import UserInitial from '@/components/UserInitial';
 
 export default function Dashboard() {
   const { profile, isLoadingProfile, errorProfile } = useProfile();

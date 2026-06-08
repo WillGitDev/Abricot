@@ -27,15 +27,7 @@
     color: var(--orange-dark);
 }
 
-.user{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 65px;
-    height: 65px;
-    border-radius: var(--radius-xl);
-    background-color: var(--orange-light);
-}
+
 
 .activeButton {
     background-color: black;

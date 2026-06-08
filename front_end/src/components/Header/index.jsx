@@ -4,8 +4,9 @@ import styles from './header.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import UserInitial from '@components/UserInitial';
 
-export default function Header() {
+export default function Header({ name }) {
   const pathname = usePathname();
   const isActiveDashboard = pathname === '/dashboard';
   const isActiveProjects = pathname === '/projects';
@@ -45,9 +46,7 @@ export default function Header() {
           </button>
         </Link>
       </div>
-      <div className={styles.user}>
-        <p>AD</p>
-      </div>
+      <UserInitial name={name} />
     </header>
   );
 }

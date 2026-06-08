@@ -1,0 +1,32 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--radius-xl);
+    background-color: var(--orange-light);
+}
+
+.large{
+    width: 65px;
+    height: 65px;
+}
+
+.small{
+    width: 30px;
+    height: 30px;
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-xs);
+}
+
+.bgOrange{
+    background-color: var(--orange-light);
+}
+
+.bgDarkOrange{
+    background-color: var(--orange-dark);
+    color: white;
+}
+
+.bgGrey{
+    background-color: var(--grey-light);
+}
