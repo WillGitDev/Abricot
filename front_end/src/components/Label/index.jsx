@@ -1,20 +1,23 @@
 import styles from './label.module.css';
 
-export default function Label({ tag }) {
+export default function Label({ tag, fullName }) {
   const colorLabel = () => {
     switch (tag) {
       case 'TODO':
         tag = 'À faire';
-        return styles.aFaire;
+        return styles.todo;
       case 'IN_PROGRESS':
         tag = 'En cours';
-        return styles.enCours;
+        return styles.inProgress;
       case 'DONE':
         tag = 'Terminée';
-        return styles.terminee;
-      case 'proprietaire':
+        return styles.done;
+      case 'owner':
         tag = 'Propriétaire';
-        return styles.proprietaire;
+        return styles.owner;
+      case 'user':
+        tag = fullName;
+        return styles.user;
     }
   };
 

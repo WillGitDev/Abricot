@@ -23,9 +23,7 @@ export default function Dashboard() {
   if (errorTasks) return <p>Erreur : {errorTasks}</p>;
   const sortedTaskByPriority = sortTasksByPriority(userTasks);
   const sortedTaskByStatus = sortTasksByStatus(userTasks);
-  console.log('Les tâches triées par status', sortedTaskByStatus);
-  console.log('La tâche seul "userTasks" : ', userTasks);
-  console.log('Le nouveau petit hook bien fait "tasks" : ', tasks);
+
   return (
     <>
       <div className={styles.container}>

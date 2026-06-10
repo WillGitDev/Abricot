@@ -8,24 +8,29 @@
     padding: 4px 16px;
 }
 
-.aFaire{
+.todo{
     color: var(--red);
     background-color: var(--red-light);
 }
 
-.enCours{
+.inProgress{
     color: var(--orange);
     background-color: var(--orange-medium);
 }
 
-.terminee{
+.done{
     color: var(--green);
     background-color: var(--green-light);
 }
 
-.proprietaire{
+.owner{
     color: var(--orange-dark);
     background-color: var(--orange-light);
+}
+
+.user{
+    color: var(--grey);
+    background-color: var(--grey-light);
 }
 
 .label{

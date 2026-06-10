@@ -1,0 +1,143 @@
+.container{
+    width: 100%;
+    min-height: 260px;
+    border: 1px solid var(--grey-light);
+    border-radius: var(--radius-lg);
+    padding: 25px 40px;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 155px;
+    border-bottom: 1px solid var(--grey-light);
+    
+}
+
+.containerTitle{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.title{
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-xl);
+}
+
+.subtitle{
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-md);
+    color: var(--grey);
+}
+
+.txtDueDate{
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-sm);
+    color: var(--grey);
+}
+
+.dueDate{
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-sm);
+}
+
+.txtAssignee{
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-sm);
+    color: var(--grey);
+}
+
+.userLabel{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 5px;
+}
+
+.label{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.txtAssignee{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.titleLabel{
+    display: flex;
+    gap: 10px;
+}
+
+.containerDueDate{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.buttonExpand {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 16px 0;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  color: #1f2937;
+  cursor: pointer;
+}
+
+.chevron {
+  transition: transform 0.2s ease-in-out;
+  color: #6b7280;
+}
+
+.rotated {
+  transform: rotate(180deg); 
+}
+
+
+.containerComments {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.containerComments.open {
+  max-height: 500px;
+  opacity: 1;
+  padding-top: 8px;
+  padding-bottom: 16px;
+}
+
+/* Ne pas mettre de padding sur le container animé, mais sur son enfant direct */
+.containerComments{
+    max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease-out, opacity 0.25s ease-out, padding 0.25s ease-out;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.commentItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  font-size: 14px;
+  color: #4b5563;
+  margin-top: 8px;
+  padding: 10px 12px;
+  background-color: var(--grey-light);
+  border-radius: var(--radius-md);
+}
+

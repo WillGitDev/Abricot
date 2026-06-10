@@ -24,7 +24,7 @@ export default function useTasks() {
         setTasks(data);
         setUserTasks(data.data.tasks);
       } catch (error) {
-        setErrorTasks('Erreur lors de la récupération des tâches : ', error);
+        setErrorTasks(`Erreur lors de la récupération des tâches :  ${error}`);
       } finally {
         setIsLoadingTasks(false);
       }

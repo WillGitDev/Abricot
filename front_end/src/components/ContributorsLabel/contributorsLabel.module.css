@@ -1,0 +1,27 @@
+.container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    width: 100%;
+    background-color: #F3F4F6;
+    padding: 20px 50px;
+    border-radius: var(--radius-lg);
+}
+
+.containerWorkers{
+    display: flex;
+    gap: 5px;
+    width: auto;
+}
+
+.containerUser{
+    display: flex;
+    gap: 5px;
+}
+
+.contributorsTxt{
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-lg);
+    color: var(--grey);
+}

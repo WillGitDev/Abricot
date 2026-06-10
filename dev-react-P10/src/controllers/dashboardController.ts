@@ -102,8 +102,7 @@ export const getAssignedTasks = async (
     sendSuccess(res, "Tâches assignées récupérées", { tasks });
   } catch (error) {
     console.error(
-      "Erreur lors de la récupération des tâches assignées:",
-      error
+      `Erreur lors de la récupération des tâches assignées: ${error}`
     );
     sendServerError(res, "Erreur lors de la récupération des tâches assignées");
   }

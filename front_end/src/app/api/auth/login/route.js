@@ -14,9 +14,8 @@ export async function POST(request) {
       body: JSON.stringify({ email: email, password: password }),
     });
     const data = await response.json();
-    console.log("Route login api: l'objet data : ", data);
+
     if (!response.ok) {
-      console.log('Route login api: la variable response.ok est à false');
       return NextResponse.json({ message: data.message }, { status: 401 });
     }
     const res = NextResponse.json({ user: data.data.user });
@@ -27,7 +26,7 @@ export async function POST(request) {
       path: '/',
       maxAge: 60 * 60 * 24, // 1 day
     });
-    console.log("Route login api: l'objet response :", res);
+
     return res;
   } catch (error) {
     console.error('Erreur login: ', error);

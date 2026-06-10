@@ -1,12 +1,9 @@
 import styles from './cardProjects.module.css';
 import Image from 'next/image';
 import UserInitial from '@components/UserInitial';
+import Label from '../Label';
 
 export default function CardProjects({ project, totalTasks, taskDone }) {
-  console.log(
-    'Analyse de ce que réprésente la variable project dans le composant CardProjects : ',
-    project
-  );
   // Un objet set pour compter en fonction l'id le nombre de
   // colaborateur sur le projet.
   const userIds = new Set();
@@ -28,7 +25,6 @@ export default function CardProjects({ project, totalTasks, taskDone }) {
   });
   usersProject.delete(owner);
 
-  console.log('Debug pour le NOM : ', usersProject);
   return (
     <div className={styles.container} key={project.id}>
       <div className={styles.containerTitle}>
@@ -53,9 +49,8 @@ export default function CardProjects({ project, totalTasks, taskDone }) {
       </div>
       <div className={styles.containerOwners}>
         <UserInitial name={owner} isSmall={true} color="orange" />
-        <div className={styles.labelOwner}>
-          <p className={styles.textLabel}>Propriétaire</p>
-        </div>
+
+        <Label tag="owner" />
         <div className={styles.projectPartners}>
           {[...usersProject].map((user) => (
             <div key={user} className={styles.userInitial}>

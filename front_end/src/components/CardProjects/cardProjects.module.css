@@ -69,22 +69,6 @@
     gap: 10px;
 }
 
-.labelOwner{
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    height: 25px;
-    width: 120px;
-    border-radius: var(--radius-xl);
-    background-color: var(--orange-light);
-}
-
-.textLabel{
-    color: var(--orange-dark);
-    font-weight: var(--font-weight-regular);
-    font-size: var(--font-size-md);
-}
-
 .projectPartners{
     display: flex;
     align-items: center;

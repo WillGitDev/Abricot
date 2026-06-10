@@ -3,13 +3,10 @@ import CardTasks from '@components/CardTasks';
 import CounterTasks from '@components/CounterTasks';
 
 export default function KanbanTasks({ tasks }) {
-  console.log('La tâche pour le kanban :', tasks);
   const tasksTodo = tasks.TODO || [];
   const tasksInProgress = tasks.IN_PROGRESS || [];
   const tasksDone = tasks.DONE || [];
-  console.log('La grandeur du tableau : ', tasksDone);
-  console.log('Le tasks todo :', tasksTodo);
-  console.log('Le task done', tasksDone);
+
   return (
     <div className={styles.container}>
       <div className={`${styles.todo} ${styles.status}`}>
