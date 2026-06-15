@@ -1,6 +1,6 @@
 .container {
   position: relative;
-  width: 150px;
+  width: auto;
   height: 60px;
   font-family: system-ui, -apple-system, sans-serif;
 }

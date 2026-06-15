@@ -1,0 +1,131 @@
+.containerInputLabel{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 350px;
+
+}
+
+.formGroup{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input{
+    height: 50px;
+    width: 100%;
+    border-radius: var(--radius-lg);
+    border-color: var(--grey-light);
+    padding: 0 20px;
+}
+
+.containerLabel{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.button{
+    height: 50px;
+    width: 180px;
+    margin: 20px 0 50px 0;
+    background-color: var(--grey-light);
+    color: var(--grey);
+    border-radius: var(--radius-lg);
+    border: none;
+    cursor: not-allowed;
+    transition: all 0.3s ease;
+}
+
+.buttonActive{
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+}
+
+.error{
+    color: #d32f2f;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Conteneur du champ de recherche et de la liste déroulante */
+.searchWrapper {
+    position: relative;
+}
+
+/* La liste déroulante */
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid var(--grey-light);
+    border-radius: var(--radius-lg);
+    list-style: none;
+    padding: 5px 0;
+    margin: 4px 0 0 0;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Un utilisateur dans la liste */
+.dropdownItem {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 16px;
+    cursor: pointer;
+    gap: 4px;
+}
+
+.dropdownItem:hover {
+    background-color: #f5f5f5;
+}
+
+.userName {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.userEmail {
+    font-size: 12px;
+    color: var(--grey);
+}
+
+.chipsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #f0f0f0;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 13px;
+}
+
+.chipRemove {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--grey);
+    padding: 0;
+}
+
+.chipRemove:hover {
+    color: #000;
+}
+
+.searching {
+    font-size: 13px;
+    color: var(--grey);
+    padding: 8px 0;
+}

@@ -1,31 +1,44 @@
 'use client';
 
 import { useParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import styles from './singleProjectPage.module.css';
 import Image from 'next/image';
-import ContributorsLabel from '@/components/ContributorsLabel';
+import ContributorsLabel from '@components/ContributorsLabel';
 import useTasksById from '@/hooks/useTasksById';
-import useProjects from '@/hooks/useProjects';
+import useAllProjects from '@/hooks/useAllProjects';
 import SelectOptions from '@components/SelectOptions';
 import CardTasksInfo from '@components/CardTasksInfo';
 import { sortTasksByPriority } from '@/utils/sortTasksByPriority';
+import CreateTaskModal from '@components/CreateTaskModal';
+import Link from 'next/link';
 
 export default function SingleProjectPage() {
+    const [isOpen, setIsOpen] = useState(false);
+    const [isKanban, setIsKanban] = useState(false); // À voir ici si il faut plutôt l'appeler calendar.
     const params = useParams();
     const projectId = params.id;
-    const { tasksById, isLoadingTasksId, errorTasksId } =
+    const { tasksById, isLoadingTasksId, errorTasksId, refetchTasks } =
         useTasksById(projectId);
-    const { projects, isLoadingProjects, errorProjects } = useProjects();
+    const { allProjects, isLoadingAllProjects, errorAllProjects } =
+        useAllProjects();
+
     if (isLoadingTasksId) return <div>Chargement ...</div>;
     if (errorTasksId) return <div>{errorTasksId}</div>;
-    if (isLoadingProjects) return <div>Chargement ...</div>;
-    if (errorProjects) return <div>{errorProjects}</div>;
+    if (isLoadingAllProjects) return <div>Chargement ...</div>;
+    if (errorAllProjects) return <div>{errorAllProjects}</div>;
 
-    const currentProject = projects.data.projects.find(
+    const currentProject = allProjects.find(
         (project) => project.id === projectId
     );
+    const allMembers = [
+        { user: currentProject.owner, role: 'OWNER' },
+        ...currentProject.members.filter(
+            (menber) => menber.user.id !== currentProject.owner.id
+        ),
+    ];
     const currentTasks = sortTasksByPriority(tasksById.data.tasks);
-
+    console.log('Le currentProject : ', currentProject);
     const owner = currentProject.owner.name;
     const coworker = new Set();
     currentTasks.forEach((task) => {
@@ -43,28 +56,39 @@ export default function SingleProjectPage() {
     // coworker.delete(owner);
     const isCalendar = false;
 
+    const handleOpenModal = () => {
+        setIsOpen((prev) => !prev);
+    };
     return (
         <div className={styles.container}>
+            <CreateTaskModal
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                projectId={projectId}
+                members={allMembers}
+                refetchTasks={refetchTasks}
+            />
             <div className={styles.containerTopBar}>
-                <button className={styles.buttonReturn}>
+                <Link href="/projects" className={styles.buttonReturn}>
                     <Image
                         src="/arrow.svg"
                         width={10}
                         height={10}
                         alt="return"
                     />
-                </button>
+                </Link>
                 <div className={styles.infoProject}>
                     <div className={styles.containerTitleProject}>
-                        <h2 className={styles.h2}>
-                            {tasksById.data.tasks[0].project.name}
-                        </h2>
+                        <h2 className={styles.h2}>{currentProject.name}</h2>
                         <a href="/">Modifier</a>
                     </div>
                     <h3 className={styles.h3}>{currentProject.description}</h3>
                 </div>
                 <div className={styles.containerButton}>
-                    <button className={styles.buttonCreateTask}>
+                    <button
+                        className={styles.buttonCreateTask}
+                        onClick={handleOpenModal}
+                    >
                         Créer une tâche
                     </button>
                     <button className={styles.buttonIa}>
@@ -112,7 +136,9 @@ export default function SingleProjectPage() {
                             />
                             Kanban
                         </button>
-                        <SelectOptions />
+                        <div className={styles.containerSelectOptions}>
+                            <SelectOptions />
+                        </div>
                         <div className={styles.searchBar}>
                             <input
                                 type="search"

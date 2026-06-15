@@ -37,3 +37,8 @@
     font-weight: var(--font-weight-regular);
     font-size: var(--font-size-md);
 }
+
+.active{
+    outline: 3px solid currentColor;
+    outline-offset: 2px;
+}

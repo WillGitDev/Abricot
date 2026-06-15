@@ -135,3 +135,7 @@
     align-items: center;
     gap: 10px;
 }
+
+.containerSelectOptions{
+    width: 150px;
+}

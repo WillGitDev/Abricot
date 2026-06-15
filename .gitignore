@@ -12,6 +12,7 @@ node_modules
 
 # testing
 /coverage
+test.jsx
 
 # next.js
 .next/

@@ -1,15 +1,14 @@
 'use client';
 
 import styles from './projects.module.css';
-import useProjects from '@/hooks/useProjects';
+import useAllProjects from '@/hooks/useAllProjects';
 import ListCardProject from '@components/ListCardProject';
 
 export default function Projects() {
-    const { projects, errorProjects, isLoadingProjects } = useProjects();
-    if (isLoadingProjects) return <p>Chargement des tâches ...</p>;
-    if (errorProjects) return <p>Erreur: {errorProjects}</p>;
+    const { allProjects, errorAllProjects, isLoadingAllProjects } = useAllProjects();
+    if (isLoadingAllProjects) return <p>Chargement des projets ...</p>;
+    if (errorAllProjects) return <p>Erreur: {errorAllProjects}</p>;
 
-    const isSingleProject = false;
     return (
         <>
             <div className={styles.container}>
@@ -24,7 +23,7 @@ export default function Projects() {
                 </button>
             </div>
             <div className={styles.containerProject}>
-                <ListCardProject projects={projects} />
+                <ListCardProject projects={allProjects} />
             </div>
         </>
     );
