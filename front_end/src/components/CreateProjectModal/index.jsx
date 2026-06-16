@@ -2,20 +2,67 @@
 
 import styles from './createProjectModal.module.css';
 import BaseModal from '@components/BaseModal';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useCreateProject from '@/hooks/useCreateProject';
+import useUpdateProject from '@/hooks/useUpdateProject';
 import useSearchUsers from '@/hooks/useSearchUsers';
 
-export default function CreateProjectModal({ isOpen, setIsOpen }) {
+export default function CreateProjectModal({
+    isOpen,
+    setIsOpen,
+    projectToEdit = null,
+    onSuccess,
+}) {
+    const isEditMode = Boolean(projectToEdit);
+
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [contributors, setContributors] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
 
-    const { createProject, isLoading, error } = useCreateProject();
+    const {
+        createProject,
+        isLoading: isCreating,
+        error: createError,
+    } = useCreateProject();
+    const {
+        updateProject,
+        isLoading: isUpdating,
+        error: updateError,
+    } = useUpdateProject();
     const { searchUsers, results, isSearching, clearResults } =
         useSearchUsers();
+
+    const isLoading = isEditMode ? isUpdating : isCreating;
+    const error = isEditMode ? updateError : createError;
     const isFormValid = title.trim() !== '' && description.trim() !== '';
+
+    const ownerId = projectToEdit?.owner?.id;
+    const filteredResults = results.filter(
+        (user) =>
+            user.id !== ownerId && !contributors.some((c) => c.id === user.id)
+    );
+
+    useEffect(() => {
+        if (!isOpen) return;
+
+        if (projectToEdit) {
+            setTitle(projectToEdit.name);
+            setDescription(projectToEdit.description || '');
+
+            setContributors(
+                projectToEdit.members
+                    .filter((m) => m.user.id !== projectToEdit.owner.id)
+                    .map((m) => m.user)
+            );
+        } else {
+            setTitle('');
+            setDescription('');
+            setContributors([]);
+        }
+        setSearchQuery('');
+        clearResults();
+    }, [isOpen, projectToEdit]);
 
     const handleSearchChange = (e) => {
         const value = e.target.value;
@@ -35,7 +82,9 @@ export default function CreateProjectModal({ isOpen, setIsOpen }) {
     };
 
     const handleRemoveContributor = (userId) => {
-        setContributors(contributors.filter((c) => c.id !== userId));
+        setContributors(
+            contributors.filter((contributor) => contributor.id !== userId)
+        );
     };
 
     const handleSubmit = async (e) => {
@@ -43,16 +92,42 @@ export default function CreateProjectModal({ isOpen, setIsOpen }) {
 
         if (!isFormValid) return;
 
-        const result = await createProject({
-            name: title,
-            description: description,
-            contributors: contributors.map((c) => c.email),
-        });
+        let result;
+
+        if (isEditMode) {
+            const originalIds = projectToEdit.members
+                .filter((m) => m.user.id !== projectToEdit.owner.id)
+                .map((m) => m.user.id);
+            const currentIds = contributors.map((c) => c.id);
+
+            const contributorsToAdd = contributors
+                .filter((c) => !originalIds.includes(c.id))
+                .map((c) => c.email);
+
+            const contributorsToRemove = originalIds.filter(
+                (id) => !currentIds.includes(id)
+            );
+
+            result = await updateProject({
+                projectId: projectToEdit.id,
+                name: title,
+                description,
+                contributorsToAdd,
+                contributorsToRemove,
+            });
+        } else {
+            result = await createProject({
+                name: title,
+                description: description,
+                contributors: contributors.map((c) => c.email),
+            });
+        }
 
         if (result.success) {
             setTitle('');
             setDescription('');
             setContributors([]);
+            if (onSuccess) onSuccess();
             setIsOpen(false);
         }
     };
@@ -61,7 +136,7 @@ export default function CreateProjectModal({ isOpen, setIsOpen }) {
         <BaseModal
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            title="Créer un projet"
+            title={isEditMode ? 'Modifier un projet' : 'Créer un projet'}
         >
             <form onSubmit={handleSubmit}>
                 <div className={styles.containerInputLabel}>
@@ -93,7 +168,6 @@ export default function CreateProjectModal({ isOpen, setIsOpen }) {
                     <div className={styles.formGroup}>
                         <label>Contributeurs</label>
 
-                        {/* Chips des contributeurs sélectionnés */}
                         {contributors.length > 0 && (
                             <div className={styles.chipsContainer}>
                                 {contributors.map((user) => (
@@ -113,7 +187,6 @@ export default function CreateProjectModal({ isOpen, setIsOpen }) {
                             </div>
                         )}
 
-                        {/* Champ de recherche + liste déroulante */}
                         <div className={styles.searchWrapper}>
                             <input
                                 type="text"
@@ -125,10 +198,9 @@ export default function CreateProjectModal({ isOpen, setIsOpen }) {
                                 autoComplete="off"
                             />
 
-                            {/* Liste des résultats */}
-                            {results.length > 0 && (
+                            {filteredResults.length > 0 && (
                                 <ul className={styles.dropdown}>
-                                    {results.map((user) => (
+                                    {filteredResults.map((user) => (
                                         <li
                                             key={user.id}
                                             className={styles.dropdownItem}
@@ -160,7 +232,13 @@ export default function CreateProjectModal({ isOpen, setIsOpen }) {
                     className={`${styles.button} ${isFormValid && !isLoading ? styles.buttonActive : ''}`}
                     disabled={!isFormValid || isLoading}
                 >
-                    {isLoading ? 'Création en cours...' : 'Créer le projet'}
+                    {isEditMode
+                        ? isLoading
+                            ? 'Enregistrement...'
+                            : 'Enregistrer'
+                        : isLoading
+                          ? 'Création en cours...'
+                          : 'Créer le projet'}
                 </button>
             </form>
         </BaseModal>

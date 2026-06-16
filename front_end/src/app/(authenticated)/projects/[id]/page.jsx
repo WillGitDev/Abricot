@@ -11,18 +11,24 @@ import SelectOptions from '@components/SelectOptions';
 import CardTasksInfo from '@components/CardTasksInfo';
 import { sortTasksByPriority } from '@/utils/sortTasksByPriority';
 import CreateTaskModal from '@components/CreateTaskModal';
+import CreateProjectModal from '@components/CreateProjectModal';
 import Link from 'next/link';
 
 export default function SingleProjectPage() {
     const [isOpen, setIsOpen] = useState(false);
+    const [taskToEdit, setTaskToEdit] = useState(null);
+    const [isOpenProjectModal, setIsOpenProjectModal] = useState(false);
     const [isKanban, setIsKanban] = useState(false); // À voir ici si il faut plutôt l'appeler calendar.
     const params = useParams();
     const projectId = params.id;
     const { tasksById, isLoadingTasksId, errorTasksId, refetchTasks } =
         useTasksById(projectId);
-    const { allProjects, isLoadingAllProjects, errorAllProjects } =
-        useAllProjects();
-
+    const {
+        allProjects,
+        isLoadingAllProjects,
+        errorAllProjects,
+        refetchProjects,
+    } = useAllProjects();
     if (isLoadingTasksId) return <div>Chargement ...</div>;
     if (errorTasksId) return <div>{errorTasksId}</div>;
     if (isLoadingAllProjects) return <div>Chargement ...</div>;
@@ -31,21 +37,24 @@ export default function SingleProjectPage() {
     const currentProject = allProjects.find(
         (project) => project.id === projectId
     );
+    const isAdmin = currentProject.userRole === 'ADMIN';
     const allMembers = [
         { user: currentProject.owner, role: 'OWNER' },
         ...currentProject.members.filter(
-            (menber) => menber.user.id !== currentProject.owner.id
+            (member) => member.user.id !== currentProject.owner.id
         ),
     ];
     const currentTasks = sortTasksByPriority(tasksById.data.tasks);
     console.log('Le currentProject : ', currentProject);
+
     const owner = currentProject.owner.name;
-    const coworker = new Set();
-    currentTasks.forEach((task) => {
-        task.assignees.forEach((assignee) => {
-            coworker.add(assignee.user.name);
-        });
-    });
+    const canCreateTask =
+        currentProject.userRole === 'ADMIN' ||
+        currentProject.userRole === 'CONTRIBUTOR';
+
+    const contributorsNames = currentProject.members
+        .filter((member) => member.user.id !== currentProject.owner.id)
+        .map((member) => member.user.name);
     const getCoworker = (task) => {
         const workers = new Set();
         task.assignees.forEach((assignee) => {
@@ -53,11 +62,17 @@ export default function SingleProjectPage() {
         });
         return [...workers];
     };
-    // coworker.delete(owner);
+
     const isCalendar = false;
 
-    const handleOpenModal = () => {
-        setIsOpen((prev) => !prev);
+    const handleOpenCreateModal = () => {
+        setTaskToEdit(null);
+        setIsOpen(true);
+    };
+
+    const handleOpenEditModal = (task) => {
+        setTaskToEdit(task);
+        setIsOpen(true);
     };
     return (
         <div className={styles.container}>
@@ -67,6 +82,13 @@ export default function SingleProjectPage() {
                 projectId={projectId}
                 members={allMembers}
                 refetchTasks={refetchTasks}
+                taskToEdit={taskToEdit}
+            />
+            <CreateProjectModal
+                isOpen={isOpenProjectModal}
+                setIsOpen={setIsOpenProjectModal}
+                projectToEdit={currentProject}
+                onSuccess={refetchProjects}
             />
             <div className={styles.containerTopBar}>
                 <Link href="/projects" className={styles.buttonReturn}>
@@ -80,14 +102,32 @@ export default function SingleProjectPage() {
                 <div className={styles.infoProject}>
                     <div className={styles.containerTitleProject}>
                         <h2 className={styles.h2}>{currentProject.name}</h2>
-                        <a href="/">Modifier</a>
+                        <button
+                            type="button"
+                            className={styles.buttonModifyProject}
+                            onClick={() => setIsOpenProjectModal(true)}
+                            disabled={!isAdmin}
+                            title={
+                                !isAdmin
+                                    ? "Seul l'administrateur peut modifier ce projet."
+                                    : undefined
+                            }
+                        >
+                            Modifier
+                        </button>
                     </div>
                     <h3 className={styles.h3}>{currentProject.description}</h3>
                 </div>
                 <div className={styles.containerButton}>
                     <button
                         className={styles.buttonCreateTask}
-                        onClick={handleOpenModal}
+                        onClick={handleOpenCreateModal}
+                        disabled={!canCreateTask}
+                        title={
+                            !canCreateTask
+                                ? 'Seul le propriétaire ou les contributeurs peuvent créer une tâche'
+                                : undefined
+                        }
                     >
                         Créer une tâche
                     </button>
@@ -103,7 +143,7 @@ export default function SingleProjectPage() {
                 </div>
             </div>
 
-            <ContributorsLabel owner={owner} usersProject={[...coworker]} />
+            <ContributorsLabel owner={owner} usersProject={contributorsNames} />
             <div className={styles.containerTasks}>
                 <div className={styles.containerButtonBar}>
                     <p>
@@ -166,7 +206,9 @@ export default function SingleProjectPage() {
                         <CardTasksInfo
                             task={task}
                             usersProject={getCoworker(task)}
+                            onEdit={() => handleOpenEditModal(task)}
                             key={task.id}
+                            canEdit={canCreateTask}
                         />
                     ))}
                 </div>

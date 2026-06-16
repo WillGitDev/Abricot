@@ -9,7 +9,6 @@ import { sortTasksByPriority } from '@/utils/sortTasksByPriority';
 import ListTasks from '@components/ListTasks';
 import KanbanTasks from '@components/KanbanTasks';
 import { sortTasksByStatus } from '@/utils/sortTasksByStatus';
-import UserInitial from '@/components/UserInitial';
 import CreateProjectModal from '@components/CreateProjectModal';
 
 export default function Dashboard() {

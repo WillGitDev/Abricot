@@ -9,7 +9,12 @@ import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function CardTaskInfo({ task, usersProject }) {
+export default function CardTaskInfo({
+    task,
+    usersProject,
+    onEdit,
+    canEdit = undefined,
+}) {
     const dueDate = dateFormatDM(task.dueDate);
     const usersProjectArray = [...usersProject];
     const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +26,19 @@ export default function CardTaskInfo({ task, usersProject }) {
                     <div className={styles.titleLabel}>
                         <p className={styles.title}>{task.title}</p>
                         <Label tag={task.status} />
+                        <button
+                            type="button"
+                            className={styles.editButton}
+                            onClick={onEdit}
+                            disabled={!canEdit}
+                            title={
+                                !canEdit
+                                    ? 'Seuls les propriétaires et les contributeurs peuvent modifier une tâche.'
+                                    : undefined
+                            }
+                        >
+                            ...
+                        </button>
                     </div>
                     <p className={styles.subtitle}>{task.description}</p>
                 </div>

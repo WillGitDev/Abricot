@@ -73,7 +73,26 @@
 
 .titleLabel{
     display: flex;
+    align-items: center;
     gap: 10px;
+}
+
+.editButton{
+    margin-left: auto;
+    background: none;
+    border: 1px solid var(--grey-light);
+    border-radius: var(--radius-lg);
+    padding: 25px;
+    color: var(--grey);
+    font-size: var(--font-size-sm);
+    text-decoration: underline;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: var(--font-size-md);
+}
+
+.editButton:hover{
+    color: #000;
 }
 
 .containerDueDate{

@@ -5,6 +5,7 @@ import BaseModal from '@components/BaseModal';
 import { useState, useEffect } from 'react';
 import Label from '../Label';
 import useCreateTask from '@/hooks/useCreateTask';
+import useUpdateTask from '@/hooks/useUpdateTask';
 
 export default function CreateTaskModal({
     isOpen,
@@ -12,43 +13,69 @@ export default function CreateTaskModal({
     projectId,
     members,
     refetchTasks,
+    taskToEdit = null,
 }) {
+    const isEditMode = Boolean(taskToEdit);
+
     const dateNow = () => {
         const now = new Date();
         const offset = now.getTimezoneOffset() * 6000;
         return new Date(now - offset).toISOString().split('T')[0];
     };
-    const [dueDate, setDueDate] = useState(dateNow());
-    useEffect(() => {
-        if (isOpen) {
-            setDueDate(dateNow());
-        }
-    }, [isOpen]);
 
+    const [dueDate, setDueDate] = useState(dateNow());
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [priority, setPriority] = useState('MEDIUM');
     const [assignees, setAssignees] = useState([]);
     const [isOpenAssignee, setIsOpenAssignee] = useState(false);
     const [status, setStatus] = useState('TODO');
-    const { createTask, isLoading, error } = useCreateTask();
+
+    const { createTask, isLoading: isCreating } = useCreateTask();
+    const { updateTask, isLoading: isUpdating } = useUpdateTask();
+    const isLoading = isEditMode ? isUpdating : isCreating;
+
+    useEffect(() => {
+        if (!isOpen) return;
+
+        if (taskToEdit) {
+            setTitle(taskToEdit.title);
+            setDescription(taskToEdit.description || '');
+            setPriority(taskToEdit.priority);
+            setStatus(taskToEdit.status);
+            setDueDate(taskToEdit.dueDate.split('T')[0]);
+            setAssignees(taskToEdit.assignees || []);
+        } else {
+            setTitle('');
+            setDescription('');
+            setPriority('MEDIUM');
+            setStatus('TODO');
+            setDueDate(dateNow());
+            setAssignees([]);
+        }
+    }, [isOpen, taskToEdit]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const result = await createTask({
+        const taskData = {
             projectId,
             title,
             description,
             priority,
             dueDate,
             assigneeIds: assignees.map((assignee) => assignee.user.id),
-        });
+        };
+
+        const result = isEditMode
+            ? await updateTask({
+                  ...taskData,
+                  taskId: taskToEdit.id,
+                  status,
+              })
+            : await createTask(taskData);
 
         if (result.success) {
-            setTitle('');
-            setDescription('');
-            setPriority('MEDIUM');
             refetchTasks();
             setIsOpen(false);
         }
@@ -74,7 +101,7 @@ export default function CreateTaskModal({
         <BaseModal
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            title="Créer une tâche"
+            title={isEditMode ? 'Modifier une tâche' : 'Créer une tâche'}
         >
             <form onSubmit={handleSubmit}>
                 <div className={styles.containerInputLabel}>
@@ -195,8 +222,18 @@ export default function CreateTaskModal({
                         </div>
                     </div>
                 </div>
-                <button type="submit" className={styles.button}>
-                    + Ajouter une tâche
+                <button
+                    type="submit"
+                    className={styles.button}
+                    disabled={isLoading}
+                >
+                    {isEditMode
+                        ? isLoading
+                            ? 'Enregistrement...'
+                            : 'Enregistrer'
+                        : isLoading
+                          ? 'Création...'
+                          : '+ Ajouter une tâche'}
                 </button>
             </form>
         </BaseModal>

@@ -23,40 +23,36 @@ export default function Header() {
                 <Image src="/logo.svg" alt="Logo" width={150} height={20} />
             </div>
             <div className={styles.containerButton}>
-                <Link href="/dashboard" className={styles.button}>
-                    <button
-                        className={`${styles.button} ${isActiveDashboard ? styles.activeButton : ''}`}
-                    >
-                        <Image
-                            src="/logo_carre.svg"
-                            alt="Logo"
-                            width={24}
-                            height={24}
-                            className={
-                                isActiveDashboard ? styles.activeLogo : ''
-                            }
-                        />
-                        Tableau de bord
-                    </button>
+                <Link
+                    href="/dashboard"
+                    className={`${styles.button} ${isActiveDashboard ? styles.activeButton : ''}`}
+                >
+                    <Image
+                        src="/logo_carre.svg"
+                        alt="Logo"
+                        width={24}
+                        height={24}
+                        className={isActiveDashboard ? styles.activeLogo : ''}
+                    />
+                    <p>Tableau de bord</p>
                 </Link>
-                <Link href="/projects" className={styles.button}>
-                    <button
-                        className={`${styles.button} ${isActiveProjects ? styles.activeButton : ''}`}
-                    >
-                        <Image
-                            src="/logo_file.svg"
-                            alt="logo"
-                            width={23}
-                            height={30}
-                            className={
-                                isActiveProjects ? styles.activeLogo : ''
-                            }
-                        />
-                        Projets
-                    </button>
+                <Link
+                    href="/projects"
+                    className={`${styles.button} ${isActiveProjects ? styles.activeButton : ''}`}
+                >
+                    <Image
+                        src="/logo_file.svg"
+                        alt="logo"
+                        width={23}
+                        height={30}
+                        className={isActiveProjects ? styles.activeLogo : ''}
+                    />
+                    <p>Projets</p>
                 </Link>
             </div>
-            <UserInitial name={profile.data.user.name} color="orange" />
+            <Link href="/compte">
+                <UserInitial name={profile.data.user.name} color="orange" />
+            </Link>
         </header>
     );
 }

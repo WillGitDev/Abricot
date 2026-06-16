@@ -27,6 +27,19 @@
     gap: 5px;
 }
 
+.buttonModifyProject{
+    background: none;
+    border: none;
+    color: var(--orange-dark);
+    font-size: var(--font-size-sm);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.buttonModifyProject:hover{
+    color: #000;
+}
+
 .h2{
     font-weight: var(--font-weight-medium);
     font-size: var(--font-size-xl);

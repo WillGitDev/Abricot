@@ -9,10 +9,8 @@ export default function BaseModal({ isOpen, setIsOpen, title, children }) {
     return (
         <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
             <Dialog.Portal>
-                {/* Style commun de l'overlay flouté/sombre */}
                 <Dialog.Overlay className={styles.modalOverlay} />
 
-                {/* Style de la boîte blanche (dimensions, ombres, arrondis) */}
                 <Dialog.Content
                     className={styles.modalContent}
                     aria-describedby="dialog-description"
@@ -34,7 +32,6 @@ export default function BaseModal({ isOpen, setIsOpen, title, children }) {
                         </Dialog.Close>
                     </div>
 
-                    {/* C'est ici qu'on injectera le formulaire spécifique */}
                     <div className={styles.modalBody}>{children}</div>
                 </Dialog.Content>
             </Dialog.Portal>
