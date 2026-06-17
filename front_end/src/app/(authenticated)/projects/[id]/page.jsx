@@ -1,7 +1,9 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import useDeleteProject from '@/hooks/useDeleteProject';
+import useDeleteTask from '@/hooks/useDeleteTask';
 import styles from './singleProjectPage.module.css';
 import Image from 'next/image';
 import ContributorsLabel from '@components/ContributorsLabel';
@@ -12,14 +14,19 @@ import CardTasksInfo from '@components/CardTasksInfo';
 import { sortTasksByPriority } from '@/utils/sortTasksByPriority';
 import CreateTaskModal from '@components/CreateTaskModal';
 import CreateProjectModal from '@components/CreateProjectModal';
+import IaTaskModal from '@components/IaTaskModal';
 import Link from 'next/link';
 
 export default function SingleProjectPage() {
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpenIaModal, setIsOpenIaModal] = useState(false);
     const [taskToEdit, setTaskToEdit] = useState(null);
     const [isOpenProjectModal, setIsOpenProjectModal] = useState(false);
     const [isKanban, setIsKanban] = useState(false); // À voir ici si il faut plutôt l'appeler calendar.
     const params = useParams();
+    const router = useRouter();
+    const { deleteProject } = useDeleteProject();
+    const { deleteTask } = useDeleteTask();
     const projectId = params.id;
     const { tasksById, isLoadingTasksId, errorTasksId, refetchTasks } =
         useTasksById(projectId);
@@ -74,6 +81,30 @@ export default function SingleProjectPage() {
         setTaskToEdit(task);
         setIsOpen(true);
     };
+
+    const handleDelete = async () => {
+        const confirmed = window.confirm(
+            'Voulez-vous vraiment supprimer ce projet ? Cette action est irréversible.'
+        );
+        if (!confirmed) return;
+
+        const result = await deleteProject(projectId);
+        if (result.success) {
+            router.push('/projects');
+        }
+    };
+
+    const handleDeleteTask = async (taskId) => {
+        const confirmed = window.confirm(
+            'Voulez-vous vraiment supprimer cette tâche ?'
+        );
+        if (!confirmed) return;
+
+        const result = await deleteTask({ projectId, taskId });
+        if (result.success) {
+            refetchTasks();
+        }
+    };
     return (
         <div className={styles.container}>
             <CreateTaskModal
@@ -89,6 +120,12 @@ export default function SingleProjectPage() {
                 setIsOpen={setIsOpenProjectModal}
                 projectToEdit={currentProject}
                 onSuccess={refetchProjects}
+            />
+            <IaTaskModal
+                isOpen={isOpenIaModal}
+                setIsOpen={setIsOpenIaModal}
+                title="Test du titre"
+                imgSrc="/star.svg"
             />
             <div className={styles.containerTopBar}>
                 <Link href="/projects" className={styles.buttonReturn}>
@@ -115,6 +152,15 @@ export default function SingleProjectPage() {
                         >
                             Modifier
                         </button>
+                        {isAdmin && (
+                            <button
+                                type="button"
+                                className={styles.buttonDeleteProject}
+                                onClick={handleDelete}
+                            >
+                                Supprimer
+                            </button>
+                        )}
                     </div>
                     <h3 className={styles.h3}>{currentProject.description}</h3>
                 </div>
@@ -131,7 +177,10 @@ export default function SingleProjectPage() {
                     >
                         Créer une tâche
                     </button>
-                    <button className={styles.buttonIa}>
+                    <button
+                        className={styles.buttonIa}
+                        onClick={() => setIsOpenIaModal((prev) => !prev)}
+                    >
                         <Image
                             src="/star_ia.svg"
                             width={21}
@@ -207,6 +256,7 @@ export default function SingleProjectPage() {
                             task={task}
                             usersProject={getCoworker(task)}
                             onEdit={() => handleOpenEditModal(task)}
+                            onDelete={() => handleDeleteTask(task.id)}
                             key={task.id}
                             canEdit={canCreateTask}
                         />

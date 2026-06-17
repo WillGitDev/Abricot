@@ -95,6 +95,42 @@
     color: #000;
 }
 
+.menuWrapper{
+    position: relative;
+    margin-left: auto;
+}
+
+.menu{
+    position: absolute;
+    right: 0;
+    top: calc(100% + 4px);
+    min-width: 140px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid var(--grey-light);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 4px;
+    z-index: 10;
+}
+
+.menuItem{
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-md);
+    color: #000;
+    cursor: pointer;
+}
+
+.menuItem:hover{
+    background-color: var(--grey-light);
+}
+
 .containerDueDate{
     display: flex;
     align-items: center;

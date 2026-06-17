@@ -4,8 +4,15 @@ import * as Dialog from '@radix-ui/react-dialog';
 import styles from './baseModal.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import Image from 'next/image';
 
-export default function BaseModal({ isOpen, setIsOpen, title, children }) {
+export default function BaseModal({
+    isOpen,
+    setIsOpen,
+    title,
+    imgSrc,
+    children,
+}) {
     return (
         <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
             <Dialog.Portal>
@@ -17,7 +24,17 @@ export default function BaseModal({ isOpen, setIsOpen, title, children }) {
                 >
                     <div className={styles.headerRow}>
                         <Dialog.Title className={styles.modalTitle}>
-                            {title}
+                            {imgSrc ? (
+                                <Image
+                                    src={imgSrc}
+                                    width={20}
+                                    height={20}
+                                    alt="image logo"
+                                />
+                            ) : (
+                                ''
+                            )}
+                            <span className={styles.title}>{title}</span>
                         </Dialog.Title>
                         <Dialog.Close asChild>
                             <button

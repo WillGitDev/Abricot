@@ -13,11 +13,13 @@ export default function CardTaskInfo({
     task,
     usersProject,
     onEdit,
+    onDelete,
     canEdit = undefined,
 }) {
     const dueDate = dateFormatDM(task.dueDate);
     const usersProjectArray = [...usersProject];
     const [isOpen, setIsOpen] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
 
     return (
         <div className={styles.container}>
@@ -26,19 +28,46 @@ export default function CardTaskInfo({
                     <div className={styles.titleLabel}>
                         <p className={styles.title}>{task.title}</p>
                         <Label tag={task.status} />
-                        <button
-                            type="button"
-                            className={styles.editButton}
-                            onClick={onEdit}
-                            disabled={!canEdit}
-                            title={
-                                !canEdit
-                                    ? 'Seuls les propriétaires et les contributeurs peuvent modifier une tâche.'
-                                    : undefined
-                            }
-                        >
-                            ...
-                        </button>
+                        <div className={styles.menuWrapper}>
+                            <button
+                                type="button"
+                                className={styles.editButton}
+                                onClick={() => setMenuOpen(!menuOpen)}
+                                disabled={!canEdit}
+                                title={
+                                    !canEdit
+                                        ? 'Seuls les propriétaires et les contributeurs peuvent modifier une tâche.'
+                                        : undefined
+                                }
+                            >
+                                ...
+                            </button>
+
+                            {menuOpen && (
+                                <div className={styles.menu}>
+                                    <button
+                                        type="button"
+                                        className={styles.menuItem}
+                                        onClick={() => {
+                                            onEdit();
+                                            setMenuOpen(false);
+                                        }}
+                                    >
+                                        Modifier
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className={styles.menuItem}
+                                        onClick={() => {
+                                            onDelete();
+                                            setMenuOpen(false);
+                                        }}
+                                    >
+                                        Supprimer
+                                    </button>
+                                </div>
+                            )}
+                        </div>
                     </div>
                     <p className={styles.subtitle}>{task.description}</p>
                 </div>
