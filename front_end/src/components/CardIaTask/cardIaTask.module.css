@@ -1,0 +1,44 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+    min-height: 150px;
+    border: 1px solid var(--grey-light);
+    border-radius: var(--radius-lg);
+    padding: 25px 40px;
+}
+
+.containerTitle {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.containerEditButton {
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+}
+
+.title{
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-xl);
+}
+
+.description{
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-md);
+    color: var(--grey);
+}
+
+.button{
+    background-color: transparent;
+    border: none;
+    color: var(--grey);
+}
+
+.textButton{
+    margin-left: 5px;
+}

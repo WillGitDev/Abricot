@@ -126,7 +126,10 @@ export default function SingleProjectPage() {
                 setIsOpen={setIsOpenIaModal}
                 title="Test du titre"
                 imgSrc="/star.svg"
+                existingTasks={tasksById.data.tasks}
+                projectId={currentProject.id}
             />
+            {console.log(tasksById)}
             <div className={styles.containerTopBar}>
                 <Link href="/projects" className={styles.buttonReturn}>
                     <Image

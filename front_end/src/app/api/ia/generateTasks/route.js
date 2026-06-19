@@ -1,13 +1,15 @@
 import { NextResponse } from 'next/server';
-import { MistralAI } from '@llamaindex/mistral';
+import { MistralAI, MistralAIEmbedding } from '@llamaindex/mistral';
 import { VectorStoreIndex, Document, Settings } from 'llamaindex';
-
 export async function POST(request) {
-    Settings.llm = new MistralAI({
-        apiKey: process.env.HF_TOKEN,
-        model: 'mistral-small-latest',
-    });
     try {
+        Settings.llm = new MistralAI({
+            apiKey: process.env.MISTRAL_TOKEN,
+            model: 'mistral-small-latest',
+        });
+        Settings.embedModel = new MistralAIEmbedding({
+            apiKey: process.env.MISTRAL_TOKEN,
+        });
         const body = await request.json();
         const { prompt, existingTasks } = body;
         if (!prompt || !existingTasks) {
@@ -25,12 +27,41 @@ export async function POST(request) {
         );
         const index = await VectorStoreIndex.fromDocuments(documents);
         const queryEngine = index.asQueryEngine();
-        const response = await queryEngine.query({ query: prompt });
-        return NextResponse.json(
-            { message: response.toString() },
-            { status: 200 }
-        );
+        const structuredPrompt = `
+            ### Voici le prompt de l'utilisateur : ${prompt}
+            ### Je veux qu'avec le prompt de l'utilisateur et 
+            les tâches similaires que tu as reçu ou pas, que tu me fais,
+            une réponse structurée en JSON de ce format uniquement sans aucun
+            autre caractère : 
+            [
+                {
+                    "title": "...",
+                    "description": "...",
+                    "status": "TODO"
+                }
+            ]
+            ### Contraintes:
+            Pour le status mets toujours la valeur TODO. 
+        `;
+        const response = await queryEngine.query({ query: structuredPrompt });
+        const responseText = response.toString();
+        const responseJson = () => {
+            const start = responseText.indexOf('[');
+            const end = responseText.lastIndexOf(']') + 1;
+            return responseText.slice(start, end);
+        };
+        console.log('La réponse du LLM : ', responseJson());
+        try {
+            const tasks = JSON.parse(responseJson());
+            return NextResponse.json({ tasks }, { status: 200 });
+        } catch {
+            return NextResponse.json(
+                { message: "La réponse de l'ia n'est pas un JSON valide" },
+                { status: 500 }
+            );
+        }
     } catch (error) {
+        console.error(error);
         return NextResponse.json(
             {
                 message: 'Erreur serveur',
