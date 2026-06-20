@@ -6,6 +6,8 @@ import BaseModal from '@components/BaseModal';
 import { useState, useEffect } from 'react';
 import useGenerateTasks from '@/hooks/useGenerateTasks';
 import CardIaTask from '@components/CardIaTask';
+import useCreateTask from '@/hooks/useCreateTask';
+import ModifyTaskIaModal from '@components/ModifyTaskIaModal';
 
 export default function IaTaskModal({
     isOpen,
@@ -13,10 +15,15 @@ export default function IaTaskModal({
     imgSrc,
     existingTasks,
     projectId,
+    refetchTasks,
+    members,
 }) {
     const [description, setDescription] = useState('');
     const [responseIa, setResponseIa] = useState(null);
     const { createTasks, isLoading, error } = useGenerateTasks();
+    const { createTask } = useCreateTask();
+    const [editingIndex, setEditingIndex] = useState(null);
+    const [isOpenModalModify, setIsOpenModalModify] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -33,6 +40,28 @@ export default function IaTaskModal({
         setResponseIa((prev) => prev.filter((task, i) => i !== index));
     };
 
+    const handleSave = async () => {
+        await Promise.all(
+            responseIa.map((task) => createTask({ ...task, projectId }))
+        );
+        refetchTasks();
+        setIsOpen(false);
+        setResponseIa(null);
+        setDescription('');
+    };
+
+    const handleModifyTask = (index) => {
+        setEditingIndex(index);
+        setIsOpenModalModify(true);
+    };
+
+    const onSaveTask = (updatedTask) => {
+        setResponseIa((prev) =>
+            prev.map((task, i) => (i === editingIndex ? updatedTask : task))
+        );
+        setIsOpenModalModify(false);
+        setEditingIndex(null);
+    };
     const title = responseIa ? 'Vos tâches ...' : 'Créez une tâche';
 
     return (
@@ -42,6 +71,17 @@ export default function IaTaskModal({
             title={title}
             imgSrc={imgSrc}
         >
+            <ModifyTaskIaModal
+                isOpen={isOpenModalModify}
+                setIsOpen={setIsOpenModalModify}
+                projectId={projectId}
+                refetchTasks={refetchTasks}
+                taskToEdit={
+                    editingIndex !== null ? responseIa[editingIndex] : null
+                }
+                members={members}
+                onSave={onSaveTask}
+            />
             <div className={styles.container}>
                 <div className={styles.containerTasks}>
                     {responseIa &&
@@ -53,13 +93,18 @@ export default function IaTaskModal({
                                 handleDeleteTasks={() =>
                                     handleDeleteIaTask(index)
                                 }
+                                handleModifyTask={() => handleModifyTask(index)}
                             />
                         ))}
                 </div>
                 {responseIa && (
                     <div className={styles.containerAdd}>
-                        <button type="button" className={styles.addTasksButton}>
-                            + Ajouter des tâches
+                        <button
+                            type="button"
+                            className={styles.addTasksButton}
+                            onClick={handleSave}
+                        >
+                            + Ajouter les tâches
                         </button>
                     </div>
                 )}

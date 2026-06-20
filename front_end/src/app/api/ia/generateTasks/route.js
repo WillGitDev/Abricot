@@ -36,12 +36,10 @@ export async function POST(request) {
             [
                 {
                     "title": "...",
-                    "description": "...",
-                    "status": "TODO"
+                    "description": "..."
                 }
             ]
-            ### Contraintes:
-            Pour le status mets toujours la valeur TODO. 
+            
         `;
         const response = await queryEngine.query({ query: structuredPrompt });
         const responseText = response.toString();
@@ -50,10 +48,21 @@ export async function POST(request) {
             const end = responseText.lastIndexOf(']') + 1;
             return responseText.slice(start, end);
         };
+        const date = new Date();
         console.log('La réponse du LLM : ', responseJson());
         try {
             const tasks = JSON.parse(responseJson());
-            return NextResponse.json({ tasks }, { status: 200 });
+            const tasksComplete = tasks.map((task) => ({
+                ...task,
+                priority: 'MEDIUM',
+                dueDate: date.toISOString().split('T')[0],
+                assignees: [],
+            }));
+            console.warn(
+                'La réponse avec rajout des éléments: ',
+                tasksComplete
+            );
+            return NextResponse.json({ tasks: tasksComplete }, { status: 200 });
         } catch {
             return NextResponse.json(
                 { message: "La réponse de l'ia n'est pas un JSON valide" },

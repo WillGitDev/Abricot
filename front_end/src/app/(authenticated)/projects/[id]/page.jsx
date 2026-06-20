@@ -128,6 +128,8 @@ export default function SingleProjectPage() {
                 imgSrc="/star.svg"
                 existingTasks={tasksById.data.tasks}
                 projectId={currentProject.id}
+                refetchTasks={refetchTasks}
+                members={allMembers}
             />
             {console.log(tasksById)}
             <div className={styles.containerTopBar}>

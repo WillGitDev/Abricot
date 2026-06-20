@@ -1,7 +1,12 @@
 import styles from './cardIaTask.module.css';
 import Image from 'next/image';
 
-export default function CardIaTask({ title, description, handleDeleteTasks }) {
+export default function CardIaTask({
+    title,
+    description,
+    handleDeleteTasks,
+    handleModifyTask,
+}) {
     return (
         <div className={styles.container}>
             <div className={styles.containerTitle}>
@@ -23,7 +28,11 @@ export default function CardIaTask({ title, description, handleDeleteTasks }) {
                     <p className={styles.textButton}>Supprimer</p>
                 </button>
                 <p>|</p>
-                <button type="button" className={styles.button}>
+                <button
+                    type="button"
+                    className={styles.button}
+                    onClick={handleModifyTask}
+                >
                     <Image
                         src="/edit.svg"
                         width={15}
