@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 export default function useCreateTask() {
     const [isLoading, setIsLoading] = useState(false);
@@ -21,6 +22,10 @@ export default function useCreateTask() {
             const data = await response.json();
 
             if (!response.ok) {
+                toast.error(
+                    'Erreur lors de la création de la tâche : ',
+                    data.message
+                );
                 setError(
                     data.message || 'Erreur lors de la création de la tâche'
                 );
@@ -30,6 +35,7 @@ export default function useCreateTask() {
             setError(null);
             return { success: true, data };
         } catch (error) {
+            toast.error('Erreur réseau : ', error.message);
             const errorMessage = 'Erreur réseau : ' + error.message;
             setError(errorMessage);
             return { success: false, error: errorMessage };

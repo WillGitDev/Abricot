@@ -27,7 +27,9 @@ export default function CardTaskInfo({
                 <div className={styles.containerTitle}>
                     <div className={styles.titleLabel}>
                         <p className={styles.title}>{task.title}</p>
-                        <Label tag={task.status} />
+                        <div className={styles.containerLabel}>
+                            <Label tag={task.status} />
+                        </div>
                         <div className={styles.menuWrapper}>
                             <button
                                 type="button"

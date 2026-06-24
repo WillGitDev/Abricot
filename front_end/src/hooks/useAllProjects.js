@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { toast } from 'sonner';
 
 export default function useAllProjects() {
     const [allProjects, setAllProjects] = useState([]);
@@ -15,14 +16,19 @@ export default function useAllProjects() {
             const data = await response.json();
 
             if (!response.ok) {
+                toast.error(
+                    'Erreur lors de la récupération des projets : ',
+                    data.message
+                );
                 setErrorAllProjects(
-                    data.message ||
-                        'Erreur lors de la récupération des projets'
+                    data.message || 'Erreur lors de la récupération des projets'
                 );
                 return;
             }
+
             setAllProjects(data.data.projects);
         } catch (error) {
+            toast.error('Erreur réseau : ', error);
             setErrorAllProjects('Erreur réseau : ' + error.message);
         } finally {
             setIsLoadingAllProjects(false);

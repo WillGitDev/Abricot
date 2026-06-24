@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 export default function useUpdateTask() {
     const [isLoading, setIsLoading] = useState(false);
@@ -21,6 +22,10 @@ export default function useUpdateTask() {
             const data = await response.json();
 
             if (!response.ok) {
+                toast.error(
+                    'Erreur lors de la modification de la tâche : ',
+                    data.message
+                );
                 setError(
                     data.message || 'Erreur lors de la modification de la tâche'
                 );
@@ -31,6 +36,7 @@ export default function useUpdateTask() {
             return { success: true, data };
         } catch (error) {
             const errorMessage = 'Erreur réseau : ' + error.message;
+            toast.error(errorMessage);
             setError(errorMessage);
             return { success: false, error: errorMessage };
         } finally {

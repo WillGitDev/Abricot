@@ -1,4 +1,4 @@
-'use clien';
+'use client';
 import styles from './cardTasks.module.css';
 import Label from '@/components/Label';
 import Image from 'next/image';

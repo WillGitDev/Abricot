@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 export default function useUpdateProject() {
     const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +24,10 @@ export default function useUpdateProject() {
             });
             const dataPut = await responsePut.json();
             if (!responsePut.ok) {
+                toast.error(
+                    'Erreur lors de la modification : ',
+                    dataPut.message
+                );
                 setError(dataPut.message || 'Erreur lors de la modification');
                 return { success: false, error: dataPut.message };
             }
@@ -36,6 +41,7 @@ export default function useUpdateProject() {
                 });
                 if (!resAdd.ok) {
                     const dataAdd = await resAdd.json();
+                    toast.error('Échec ajout contributeur');
                     console.error('Échec ajout contributeur', email, dataAdd);
                     setError(
                         dataAdd.message ||
@@ -57,6 +63,7 @@ export default function useUpdateProject() {
                 );
                 if (!resRemove.ok) {
                     const dataRemove = await resRemove.json();
+                    toast.error('Échec retrait contributeur');
                     console.error(
                         'Échec retrait contributeur',
                         userId,
@@ -71,8 +78,9 @@ export default function useUpdateProject() {
             }
 
             return { success: true, data: dataPut };
-        } catch (err) {
-            const errorMessage = 'Erreur réseau : ' + err.message;
+        } catch (error) {
+            toast.error('Erreur réseau : ', error.message);
+            const errorMessage = 'Erreur réseau : ' + error.message;
             setError(errorMessage);
             return { success: false, error: errorMessage };
         } finally {

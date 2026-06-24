@@ -7,7 +7,7 @@ import styles from './selectOptions.module.css';
 
 export default function SelectOptions({
     label = 'Recherche',
-    options = ['Statut', 'test'],
+    options = [],
     onSelect,
     ariaLabelledBy,
 }) {

@@ -8,6 +8,7 @@ import useGenerateTasks from '@/hooks/useGenerateTasks';
 import CardIaTask from '@components/CardIaTask';
 import useCreateTask from '@/hooks/useCreateTask';
 import ModifyTaskIaModal from '@components/ModifyTaskIaModal';
+import { toast } from 'sonner';
 
 export default function IaTaskModal({
     isOpen,
@@ -32,7 +33,10 @@ export default function IaTaskModal({
             existingTasks: existingTasks,
         });
         if (result.success) {
+            toast.success('Tâche créé avec succés');
             setResponseIa(result.data.tasks);
+        } else {
+            toast.error('Échec lors de la création de la tâche');
         }
     };
 
@@ -41,13 +45,19 @@ export default function IaTaskModal({
     };
 
     const handleSave = async () => {
-        await Promise.all(
+        const results = await Promise.all(
             responseIa.map((task) => createTask({ ...task, projectId }))
         );
-        refetchTasks();
-        setIsOpen(false);
-        setResponseIa(null);
-        setDescription('');
+        const allOk = results.every((result) => result.success);
+        if (allOk) {
+            refetchTasks();
+            setIsOpen(false);
+            setResponseIa(null);
+            setDescription('');
+            toast.success('Toutes les tâches ont été créées');
+        } else {
+            toast.error("Échec de l'enregistrement des tâches");
+        }
     };
 
     const handleModifyTask = (index) => {

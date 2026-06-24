@@ -2,15 +2,25 @@ import styles from './cardProjects.module.css';
 import Image from 'next/image';
 import UserInitial from '@components/UserInitial';
 import Label from '../Label';
+import useTasksById from '@/hooks/useTasksById';
 
-export default function CardProjects({ project, totalTasks, taskDone }) {
+export default function CardProjects({ project, projectId }) {
     // Un objet set pour compter en fonction l'id le nombre de
     // colaborateur sur le projet.
     const userIds = new Set();
     const fullNameTeams = new Set();
+    const { tasksById, isLoadingTasksId, errorTasksId } =
+        useTasksById(projectId);
+    if (isLoadingTasksId) return <div>Chargement...</div>;
+    console.log('LE TASKS', tasksById);
+    const totalTasks = tasksById.data.tasks.length;
+    const taskDone = tasksById.data.tasks
+        ? tasksById.data.tasks.filter((task) => task.status === 'DONE').length
+        : 0;
+
     const percentage =
         totalTasks > 0 ? Math.round((taskDone / totalTasks) * 100) : 0;
-    const tasks = project.tasks || [];
+    const tasks = tasksById.data.tasks || [];
     tasks.forEach((task) => {
         task.assignees.forEach((assignee) => {
             userIds.add(assignee.userId);

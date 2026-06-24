@@ -18,7 +18,7 @@ export default function SeeTaskModal({
     const [assignees, setAssignees] = useState([]);
     const [isOpenAssignee, setIsOpenAssignee] = useState(false);
     const [status, setStatus] = useState(task.status);
-    console.log('La tâche : ', task);
+
     useEffect(() => {
         if (!isOpen) return;
         setTitle(task.title) || '';

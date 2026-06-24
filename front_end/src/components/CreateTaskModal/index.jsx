@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import Label from '../Label';
 import useCreateTask from '@/hooks/useCreateTask';
 import useUpdateTask from '@/hooks/useUpdateTask';
+import { toast } from 'sonner';
 
 export default function CreateTaskModal({
     isOpen,
@@ -76,8 +77,13 @@ export default function CreateTaskModal({
             : await createTask(taskData);
 
         if (result.success) {
+            toast.success(
+                `Tâche ${isEditMode ? 'mise à jour ' : 'créé '} avec succés`
+            );
             refetchTasks();
             setIsOpen(false);
+        } else {
+            toast.error('Une erreur est survenue : ', result.error);
         }
     };
 

@@ -12,7 +12,7 @@
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
-    height: 230px;
+    height: 300px;
     width: 370px;
     border: 1px solid var(--grey-light);
     border-radius: var(--radius-lg);
@@ -37,17 +37,17 @@
 
 .buttonSeeTasks{
     justify-self: end;
-    align-self: flex-end;
+    align-self: end;
 }
 
 .buttonSeeTasksCarre{
     justify-self: start;
-    align-self: flex-start;
+    align-self: start;
 }
 
 .labelSize{
     height: 25px;
-    width: 100px;
+    width: auto;
 }
 
 .label{
@@ -78,4 +78,26 @@
 .infoProjectFont{
     font-weight: var(--font-weight-regular);
     font-size: var(--font-size-sm);
+}
+
+@media(max-width: 768px){
+    .long{
+        height: auto;
+    }
+}
+
+@media(max-width: 480px){
+    .long{
+        grid-template-columns: 1fr;
+        place-items: center;
+        gap: 20px;
+    }
+
+    .label{
+        place-self: center;
+    }
+
+    .buttonSeeTasks{
+        place-self: center;
+    }
 }

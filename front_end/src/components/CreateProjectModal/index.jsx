@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import useCreateProject from '@/hooks/useCreateProject';
 import useUpdateProject from '@/hooks/useUpdateProject';
 import useSearchUsers from '@/hooks/useSearchUsers';
+import { toast } from 'sonner';
 
 export default function CreateProjectModal({
     isOpen,
@@ -124,11 +125,14 @@ export default function CreateProjectModal({
         }
 
         if (result.success) {
+            toast.success('Projet créé');
             setTitle('');
             setDescription('');
             setContributors([]);
             if (onSuccess) onSuccess();
             setIsOpen(false);
+        } else {
+            toast.error('Une erreur est survenue : ', result.error);
         }
     };
 

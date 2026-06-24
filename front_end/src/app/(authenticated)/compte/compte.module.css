@@ -11,6 +11,12 @@
     border-radius: var(--radius-lg);
 }
 
+.header{
+    display: flex;
+}
+.deco{
+    width: 150px;
+}
 .containerInfoUser{
     width: 100%;
 }

@@ -10,22 +10,26 @@ import ListTasks from '@components/ListTasks';
 import KanbanTasks from '@components/KanbanTasks';
 import { sortTasksByStatus } from '@/utils/sortTasksByStatus';
 import CreateProjectModal from '@components/CreateProjectModal';
+import Loader from '@components/Loader';
+import { filterTask } from '@/utils/filterTask';
 
 export default function Dashboard() {
     const { profile, isLoadingProfile, errorProfile } = useProfile();
     const { tasks, userTasks, errorTasks, isLoadingTasks } = useTasks();
     const [isKanban, setIsKanban] = useState(false);
     const [isOpenModal, setIsOpenModal] = useState(false);
+    const [search, setSearch] = useState('');
+    const filteredTasks = filterTask(userTasks, search);
+
     const handleOpenModal = () => {
         setIsOpenModal((isOpenModal) => !isOpenModal);
     };
-    if (isLoadingProfile) return <p>Chargement du profile...</p>;
-    if (errorProfile) return <p>Erreur: {errorProfile}</p>;
+    if (isLoadingProfile) return <Loader />;
 
-    if (isLoadingTasks) return <p>Chargement des tâches ...</p>;
-    if (errorTasks) return <p>Erreur : {errorTasks}</p>;
-    const sortedTaskByPriority = sortTasksByPriority(userTasks);
-    const sortedTaskByStatus = sortTasksByStatus(userTasks);
+    if (isLoadingTasks) return <Loader />;
+
+    const sortedTaskByPriority = sortTasksByPriority(filteredTasks);
+    const sortedTaskByStatus = sortTasksByStatus(filteredTasks);
 
     return (
         <>
@@ -37,7 +41,7 @@ export default function Dashboard() {
                 <div className={styles.containerTopBar}>
                     <div className={styles.containerTitle}>
                         <h1 className={styles.h1}>Tableau de bord</h1>
-                        <p>
+                        <p className={styles.txtTitle}>
                             Bonjour {profile.data.user.name}, voici un aperçu de
                             vos projets et tâches
                         </p>
@@ -77,9 +81,17 @@ export default function Dashboard() {
                 </div>
             </div>
             {isKanban ? (
-                <KanbanTasks tasks={sortedTaskByStatus} />
+                <KanbanTasks
+                    tasks={sortedTaskByStatus}
+                    search={search}
+                    setSearch={setSearch}
+                />
             ) : (
-                <ListTasks tasks={sortedTaskByPriority} />
+                <ListTasks
+                    tasks={sortedTaskByPriority}
+                    search={search}
+                    setSearch={setSearch}
+                />
             )}
         </>
     );

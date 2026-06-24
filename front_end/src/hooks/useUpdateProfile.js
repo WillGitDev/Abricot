@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 export default function useUpdateProfile() {
     const [isLoading, setIsLoading] = useState(false);
@@ -18,13 +19,20 @@ export default function useUpdateProfile() {
             const data = await response.json();
 
             if (!response.ok) {
-                setError(data.message || 'Erreur lors de la modification du profil');
+                toast.error(
+                    'Erreur lors de la modification du profil : ',
+                    data.message
+                );
+                setError(
+                    data.message || 'Erreur lors de la modification du profil'
+                );
                 return { success: false, error: data.message };
             }
 
             return { success: true, data };
         } catch (err) {
             const errorMessage = 'Erreur réseau : ' + err.message;
+            toast.error(errorMessage);
             setError(errorMessage);
             return { success: false, error: errorMessage };
         } finally {

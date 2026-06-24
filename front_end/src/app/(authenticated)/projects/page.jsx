@@ -5,19 +5,20 @@ import { useState } from 'react';
 import useAllProjects from '@/hooks/useAllProjects';
 import ListCardProject from '@components/ListCardProject';
 import CreateProjectModal from '@components/CreateProjectModal';
+import Loader from '@components/Loader';
 
 export default function Projects() {
     const {
         allProjects,
-        errorAllProjects,
         isLoadingAllProjects,
+        errorAllProjects,
         refetchProjects,
     } = useAllProjects();
+
     const [isOpenModal, setIsOpenModal] = useState(false);
 
-    if (isLoadingAllProjects) return <p>Chargement des projets ...</p>;
-    if (errorAllProjects) return <p>Erreur: {errorAllProjects}</p>;
-
+    if (isLoadingAllProjects) return <Loader />;
+    console.log('dddd', allProjects);
     return (
         <>
             <CreateProjectModal
@@ -39,6 +40,7 @@ export default function Projects() {
                     + Créer un projet
                 </button>
             </div>
+            {console.log('Tous les projets : ', allProjects)}
             <div className={styles.containerProject}>
                 <ListCardProject projects={allProjects} />
             </div>

@@ -16,13 +16,22 @@ import CreateTaskModal from '@components/CreateTaskModal';
 import CreateProjectModal from '@components/CreateProjectModal';
 import IaTaskModal from '@components/IaTaskModal';
 import Link from 'next/link';
+import ConfirmBoxModal from '@components/ConfirmBoxModal';
+import { toast } from 'sonner';
+import Loader from '@components/Loader';
+import { filterTask } from '@/utils/filterTask';
 
 export default function SingleProjectPage() {
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpenValidateModal, setIsOpenValidateModal] = useState(false);
+    const [messageValidate, setMessageValidate] = useState(null);
     const [isOpenIaModal, setIsOpenIaModal] = useState(false);
+    const [pendingDelete, setPendingDelete] = useState(null);
     const [taskToEdit, setTaskToEdit] = useState(null);
     const [isOpenProjectModal, setIsOpenProjectModal] = useState(false);
-    const [isKanban, setIsKanban] = useState(false); // À voir ici si il faut plutôt l'appeler calendar.
+    const [isCalendar, setIsCalendar] = useState(false);
+    const [search, setSearch] = useState('');
+    const [statusFilter, setStatusFilter] = useState('ALL');
     const params = useParams();
     const router = useRouter();
     const { deleteProject } = useDeleteProject();
@@ -36,10 +45,9 @@ export default function SingleProjectPage() {
         errorAllProjects,
         refetchProjects,
     } = useAllProjects();
-    if (isLoadingTasksId) return <div>Chargement ...</div>;
-    if (errorTasksId) return <div>{errorTasksId}</div>;
-    if (isLoadingAllProjects) return <div>Chargement ...</div>;
-    if (errorAllProjects) return <div>{errorAllProjects}</div>;
+    if (isLoadingTasksId) return <Loader />;
+
+    if (isLoadingAllProjects) return <Loader />;
 
     const currentProject = allProjects.find(
         (project) => project.id === projectId
@@ -51,8 +59,18 @@ export default function SingleProjectPage() {
             (member) => member.user.id !== currentProject.owner.id
         ),
     ];
-    const currentTasks = sortTasksByPriority(tasksById.data.tasks);
-    console.log('Le currentProject : ', currentProject);
+    const labelToStatus = {
+        Tous: 'ALL',
+        'À faire': 'TODO',
+        'En cours': 'IN_PROGRESS',
+        Terminée: 'DONE',
+    };
+    const filteredTasks = filterTask(tasksById?.data?.tasks, search);
+    const statusFiltered =
+        statusFilter === 'ALL'
+            ? filteredTasks
+            : filteredTasks.filter((task) => task.status === statusFilter);
+    const currentTasks = sortTasksByPriority(statusFiltered);
 
     const owner = currentProject.owner.name;
     const canCreateTask =
@@ -70,8 +88,6 @@ export default function SingleProjectPage() {
         return [...workers];
     };
 
-    const isCalendar = false;
-
     const handleOpenCreateModal = () => {
         setTaskToEdit(null);
         setIsOpen(true);
@@ -83,27 +99,44 @@ export default function SingleProjectPage() {
     };
 
     const handleDelete = async () => {
-        const confirmed = window.confirm(
-            'Voulez-vous vraiment supprimer ce projet ? Cette action est irréversible.'
-        );
-        if (!confirmed) return;
-
-        const result = await deleteProject(projectId);
-        if (result.success) {
-            router.push('/projects');
-        }
+        setMessageValidate('Voulez-vous vraiment supprimer ce projet ?');
+        setPendingDelete({ type: 'project' });
+        setIsOpenValidateModal(true);
     };
 
     const handleDeleteTask = async (taskId) => {
-        const confirmed = window.confirm(
-            'Voulez-vous vraiment supprimer cette tâche ?'
-        );
-        if (!confirmed) return;
+        setMessageValidate('Voulez-vous vraiment supprimer cette tâche ?');
+        setPendingDelete({ type: 'task', taskId });
+        setIsOpenValidateModal(true);
+    };
 
-        const result = await deleteTask({ projectId, taskId });
-        if (result.success) {
-            refetchTasks();
+    const handleConfirmDelete = async () => {
+        if (pendingDelete?.type === 'project') {
+            const result = await deleteProject(projectId);
+            if (result.success) {
+                router.push('/projects');
+                toast.success('Projet supprimé');
+            } else {
+                toast.error('Échec de la suppression du projet');
+            }
+        } else {
+            const result = await deleteTask({
+                projectId,
+                taskId: pendingDelete?.taskId,
+            });
+            if (result.success) {
+                refetchTasks();
+                toast.success('Tâche supprimé');
+            } else {
+                toast.error('Échec de la suppression de la tâche');
+            }
         }
+        setIsOpenValidateModal(false);
+        setPendingDelete(null);
+    };
+
+    const handleSelectStatus = (label) => {
+        setStatusFilter(labelToStatus[label]);
     };
     return (
         <div className={styles.container}>
@@ -131,13 +164,20 @@ export default function SingleProjectPage() {
                 refetchTasks={refetchTasks}
                 members={allMembers}
             />
-            {console.log(tasksById)}
+            <ConfirmBoxModal
+                isOpen={isOpenValidateModal}
+                setIsOpen={setIsOpenValidateModal}
+                title="Confirmez votre choix"
+                text={messageValidate}
+                onConfirm={handleConfirmDelete}
+            />
+
             <div className={styles.containerTopBar}>
                 <Link href="/projects" className={styles.buttonReturn}>
                     <Image
                         src="/arrow.svg"
-                        width={10}
-                        height={10}
+                        width={15}
+                        height={15}
                         alt="return"
                     />
                 </Link>
@@ -206,38 +246,46 @@ export default function SingleProjectPage() {
                     </p>
 
                     <div className={styles.containerChoicePrint}>
-                        <button
-                            className={`${styles.buttonChoice} ${!isCalendar ? styles.activeButton : ''}`}
-                            onClick={() => setIsKanban(false)}
-                        >
-                            <Image
-                                src="/check.svg"
-                                width={16}
-                                height={16}
-                                alt="logo_checking"
-                            />
-                            Liste
-                        </button>
-                        <button
-                            className={`${styles.buttonChoice} ${isCalendar ? styles.activeButton : ''}`}
-                            onClick={() => setIsKanban(true)}
-                        >
-                            <Image
-                                src="/calendar.svg"
-                                width={16}
-                                height={16}
-                                alt="logo_calendar"
-                            />
-                            Kanban
-                        </button>
+                        <div className={styles.containerButtonChoice}>
+                            <button
+                                className={`${styles.buttonChoice} ${!isCalendar ? styles.activeButton : ''}`}
+                                onClick={() => setIsCalendar(false)}
+                            >
+                                <Image
+                                    src="/check.svg"
+                                    width={16}
+                                    height={16}
+                                    alt="logo_checking"
+                                />
+                                Liste
+                            </button>
+                            <button
+                                className={`${styles.buttonChoice} ${isCalendar ? styles.activeButton : ''}`}
+                                onClick={() => setIsCalendar(true)}
+                            >
+                                <Image
+                                    src="/calendar.svg"
+                                    width={16}
+                                    height={16}
+                                    alt="logo_calendar"
+                                />
+                                Calendrier
+                            </button>
+                        </div>
+
                         <div className={styles.containerSelectOptions}>
-                            <SelectOptions />
+                            <SelectOptions
+                                options={Object.keys(labelToStatus)}
+                                onSelect={handleSelectStatus}
+                            />
                         </div>
                         <div className={styles.searchBar}>
                             <input
                                 type="search"
                                 placeholder="Rechercher une tâche"
                                 className={styles.search}
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
                             />
                             <button
                                 type="button"
@@ -255,7 +303,9 @@ export default function SingleProjectPage() {
                         </div>
                     </div>
                 </div>
-                <div className={styles.taskInfo}>
+                <div
+                    className={`${isCalendar ? styles.taskCalendar : styles.taskList}`}
+                >
                     {currentTasks.map((task) => (
                         <CardTasksInfo
                             task={task}

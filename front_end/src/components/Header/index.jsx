@@ -14,8 +14,8 @@ export default function Header() {
     const { profile, isLoadingProfile, errorProfile } = useProfile();
 
     if (isLoadingProfile) return <p>Chargement...</p>;
-    if (errorProfile) return <p>Erreur : {errorProfile}</p>;
-    console.log('Le header : ', profile);
+
+    const fullName = profile.data.user.name;
 
     return (
         <header className={styles.containerHeader}>

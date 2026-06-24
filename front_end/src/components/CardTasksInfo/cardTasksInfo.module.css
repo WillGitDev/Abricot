@@ -10,15 +10,14 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    height: 155px;
+    height: 180px;
     border-bottom: 1px solid var(--grey-light);
-    
 }
 
 .containerTitle{
     display: flex;
     flex-direction: column;
-    gap: 10px;
+   
 }
 
 .title{
@@ -196,3 +195,38 @@
   border-radius: var(--radius-md);
 }
 
+@media(max-width: 480px){
+    .titleLabel{
+        flex-direction: column;
+        justify-content: start;
+    }
+
+    .container{
+        height: auto;
+    }
+
+    .content{
+        height: auto;
+    }
+
+    .editButton{
+        position: absolute;
+        bottom: 5px;
+        right: -30px;
+    }
+
+    .containerDueDate{
+        margin: 10px 0;
+    }
+
+    .label{
+        flex-wrap: wrap;
+    }
+}
+
+@media(max-width: 768px){
+    .containerLabel{
+        min-width: 90px;
+        
+    }
+}

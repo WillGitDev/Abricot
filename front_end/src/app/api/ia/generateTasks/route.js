@@ -12,7 +12,7 @@ export async function POST(request) {
         });
         const body = await request.json();
         const { prompt, existingTasks } = body;
-        if (!prompt || !existingTasks) {
+        if (!prompt || !existingTasks || existingTasks.length === 0) {
             return NextResponse.json(
                 { message: 'Information manquante' },
                 { status: 400 }
@@ -49,7 +49,7 @@ export async function POST(request) {
             return responseText.slice(start, end);
         };
         const date = new Date();
-        console.log('La réponse du LLM : ', responseJson());
+
         try {
             const tasks = JSON.parse(responseJson());
             const tasksComplete = tasks.map((task) => ({
@@ -58,10 +58,7 @@ export async function POST(request) {
                 dueDate: date.toISOString().split('T')[0],
                 assignees: [],
             }));
-            console.warn(
-                'La réponse avec rajout des éléments: ',
-                tasksComplete
-            );
+
             return NextResponse.json({ tasks: tasksComplete }, { status: 200 });
         } catch {
             return NextResponse.json(
@@ -71,6 +68,30 @@ export async function POST(request) {
         }
     } catch (error) {
         console.error(error);
+
+        const status = error.status || error.statusCode;
+
+        if (status === 429) {
+            return NextResponse.json(
+                { message: "Quota de l'IA dépassé, réessayez dans un moment." },
+                { status: 429 }
+            );
+        }
+
+        if (status === 401) {
+            return NextResponse.json(
+                { message: 'Clé API invalide' },
+                { status: 401 }
+            );
+        }
+
+        if (status === 503) {
+            return NextResponse.json(
+                { message: "Le service d'IA est momentanément indisponible" },
+                { status: 503 }
+            );
+        }
+
         return NextResponse.json(
             {
                 message: 'Erreur serveur',

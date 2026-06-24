@@ -1,4 +1,7 @@
 .containerTasks{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     min-height: 500px;
     overflow: scroll;
 }

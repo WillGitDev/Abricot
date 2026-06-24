@@ -5,8 +5,11 @@ import { useState, useEffect } from 'react';
 import useProfile from '@/hooks/useProfile.js';
 import useUpdateProfile from '@/hooks/useUpdateProfile';
 import useUpdatePassword from '@/hooks/useUpdatePassword';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export default function Compte() {
+    const router = useRouter();
     const { profile, isLoadingProfile, errorProfile } = useProfile();
     const { updateProfile, isLoading: isUpdatingProfile } = useUpdateProfile();
     const { updatePassword, isLoading: isUpdatingPassword } =
@@ -25,8 +28,8 @@ export default function Compte() {
     const changePassword = currentPassword || newPassword;
     useEffect(() => {
         if (profile) {
-            setName(profile.data.user.name.split(' ')[1] || '');
-            setSurname(profile.data.user.name.split(' ')[0] || '');
+            setName(profile.data.user.name?.split(' ')[1] || '');
+            setSurname(profile.data.user.name?.split(' ')[0] || '');
             setEmail(profile.data.user.email || '');
         }
     }, [profile]);
@@ -58,6 +61,7 @@ export default function Compte() {
             setErrorMessage(
                 profileResult.error || 'Erreur lors de la mise à jour.'
             );
+            toast.error(profileResult.error || 'Erreur lors de la mise à jour');
             return;
         }
 
@@ -72,6 +76,10 @@ export default function Compte() {
                     passwordResult.error ||
                         'Erreur lors du changement de mot de passe.'
                 );
+                toast.error(
+                    passwordResult ||
+                        'Erreur lors du changement de mot de passe'
+                );
                 return;
             }
 
@@ -80,20 +88,28 @@ export default function Compte() {
         }
 
         setSuccessMessage('Vos informations ont été mises à jour.');
+        toast.success('Vos informations ont été mises à jour.');
     };
 
+    const handleQuit = async () => {
+        try {
+            await fetch('/api/auth/logout', { method: 'POST' });
+            router.push('/');
+        } catch (error) {
+            console.error('Erreur lors de la déconnexion : ', error);
+        }
+    };
     if (isLoadingProfile) return <div>Loading ...</div>;
-    if (errorProfile) {
-        return (
-            <div>{`Erreur lors de la récupération du profile : ${errorProfile}`}</div>
-        );
-    }
-
     return (
         <div className={styles.container}>
-            <div className={styles.containerInfoUser}>
-                <h1 className={styles.title}>Mon compte</h1>
-                <p className={styles.nameUser}>{profile.data.user.name}</p>
+            <div className={styles.header}>
+                <div className={styles.containerInfoUser}>
+                    <h1 className={styles.title}>Mon compte</h1>
+                    <p className={styles.nameUser}>{profile.data.user.name}</p>
+                </div>
+                <button className={styles.deco} onClick={handleQuit}>
+                    Se déconnecter
+                </button>
             </div>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <div className={styles.containerInput}>

@@ -37,3 +37,18 @@
 .activeLogo {
     filter: brightness(0) invert(1);
 }
+
+@media(max-width: 480px){
+    .containerHeader{
+        flex-direction: column;
+        height: auto;
+        padding: 0 10px;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .containerButton{
+        justify-content: space-between;
+        width: 100%;
+    }
+}

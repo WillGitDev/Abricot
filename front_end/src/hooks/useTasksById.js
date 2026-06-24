@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { toast } from 'sonner';
 
 export default function useTasksById(id) {
     const [tasksById, setTasksById] = useState(null);
@@ -14,13 +15,19 @@ export default function useTasksById(id) {
             });
             const data = await response.json();
             if (!response.ok) {
+                toast.error(
+                    'Erreur lors de la récupération des projets : ',
+                    data.message
+                );
                 setErrorTasksId(
                     data.message || 'Erreur lors de la récupération des tâches'
                 );
                 return;
             }
+
             setTasksById(data);
         } catch (error) {
+            toast.error('Erreur : ', error);
             setErrorTasksId(`Erreur : ${error}`);
         } finally {
             setIsLoadingTasksId(false);

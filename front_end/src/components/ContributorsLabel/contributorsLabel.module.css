@@ -25,3 +25,10 @@
     font-size: var(--font-size-lg);
     color: var(--grey);
 }
+
+@media(max-width: 480px){
+    .container{
+        flex-direction: column;
+        padding: 10px 0 0 0;
+    }
+}

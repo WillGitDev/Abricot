@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 export default function useGenerateTasks() {
     const [isLoading, setIsLoading] = useState(false);
@@ -17,6 +18,10 @@ export default function useGenerateTasks() {
             const data = await response.json();
 
             if (!response.ok) {
+                toast.error(
+                    data.message ||
+                        'Erreur lors de la récupération des tâches du LLM'
+                );
                 setError(
                     data.message ||
                         'Erreur lors de la récupération des tâches du LLM'
@@ -26,6 +31,7 @@ export default function useGenerateTasks() {
 
             return { success: true, data };
         } catch (error) {
+            toast.error('Erreur réseau : ', error.message);
             setError(`Erreur réseau : ${error.message}`);
             return {
                 success: false,
