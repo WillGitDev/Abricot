@@ -12,7 +12,6 @@ export default function CardProjects({ project, projectId }) {
     const { tasksById, isLoadingTasksId, errorTasksId } =
         useTasksById(projectId);
     if (isLoadingTasksId) return <div>Chargement...</div>;
-    console.log('LE TASKS', tasksById);
     const totalTasks = tasksById.data.tasks.length;
     const taskDone = tasksById.data.tasks
         ? tasksById.data.tasks.filter((task) => task.status === 'DONE').length

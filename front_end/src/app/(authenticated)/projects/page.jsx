@@ -18,7 +18,6 @@ export default function Projects() {
     const [isOpenModal, setIsOpenModal] = useState(false);
 
     if (isLoadingAllProjects) return <Loader />;
-    console.log('dddd', allProjects);
     return (
         <>
             <CreateProjectModal
@@ -40,7 +39,6 @@ export default function Projects() {
                     + Créer un projet
                 </button>
             </div>
-            {console.log('Tous les projets : ', allProjects)}
             <div className={styles.containerProject}>
                 <ListCardProject projects={allProjects} />
             </div>
