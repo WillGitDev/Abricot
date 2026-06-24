@@ -90,3 +90,15 @@
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-regular);
 }
+
+@media(max-width: 480px){
+  .containerImg{
+    display: none;
+  }
+
+  .container{
+    justify-content: center;
+    
+    height: 100vh;
+  }
+}
