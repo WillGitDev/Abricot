@@ -283,6 +283,7 @@ export default function SingleProjectPage() {
                             <input
                                 type="search"
                                 placeholder="Rechercher une tâche"
+                                aria-label="Rechercher une tâche"
                                 className={styles.search}
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}

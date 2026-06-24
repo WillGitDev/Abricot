@@ -170,7 +170,7 @@ export default function CreateProjectModal({
                     </div>
 
                     <div className={styles.formGroup}>
-                        <label>Contributeurs</label>
+                        <label htmlFor="contributors-search">Contributeurs</label>
 
                         {contributors.length > 0 && (
                             <div className={styles.chipsContainer}>
@@ -194,6 +194,7 @@ export default function CreateProjectModal({
                         <div className={styles.searchWrapper}>
                             <input
                                 type="text"
+                                id='contributors-search'
                                 className={styles.input}
                                 placeholder="Choisir un ou plusieurs collaborateurs"
                                 value={searchQuery}

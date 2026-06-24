@@ -44,7 +44,7 @@ export default function Home() {
     return (
         <div className={styles.container}>
             <div className={styles.containerForm}>
-                <Image src="/logo.svg" alt="Logo" height={32} width={250} />
+                <Image src="/logo.svg" alt="Logo du site Abricot" height={32} width={250} />
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <fieldset className={styles.fieldset}>
                         <legend className={styles.legend}>Connexion</legend>

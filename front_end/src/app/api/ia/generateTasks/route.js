@@ -4,11 +4,11 @@ import { VectorStoreIndex, Document, Settings } from 'llamaindex';
 export async function POST(request) {
     try {
         Settings.llm = new MistralAI({
-            apiKey: process.env.MISTRAL_TOKEN,
+            apiKey: process.env.MISTRAL_API_KEY,
             model: 'mistral-small-latest',
         });
         Settings.embedModel = new MistralAIEmbedding({
-            apiKey: process.env.MISTRAL_TOKEN,
+            apiKey: process.env.MISTRAL_API_KEY,
         });
         const body = await request.json();
         const { prompt, existingTasks } = body;

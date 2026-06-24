@@ -25,6 +25,7 @@ export default function ListTasks({ tasks, cardClass, search, setSearch }) {
                     <div className={styles.searchBar}>
                         <input
                             type="search"
+                            aria-label="search"
                             placeholder="Rechercher une tâche"
                             className={styles.search}
                             value={search}
