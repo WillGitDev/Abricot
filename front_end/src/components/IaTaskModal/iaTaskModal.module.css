@@ -45,7 +45,7 @@
     width: 25px;
     height: 25px;
     border-radius: var(--radius-xl);
-    background-color: var(--orange);
+    background-color: var(--orange-dark);
 }
 
 .addTasksButton{

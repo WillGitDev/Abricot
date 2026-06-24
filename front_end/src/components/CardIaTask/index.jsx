@@ -23,7 +23,7 @@ export default function CardIaTask({
                         src="/trash.svg"
                         width={15}
                         height={15}
-                        alt="une icone de corbeille"
+                        alt=""
                     />
                     <p className={styles.textButton}>Supprimer</p>
                 </button>
@@ -37,7 +37,7 @@ export default function CardIaTask({
                         src="/edit.svg"
                         width={15}
                         height={15}
-                        alt="Une icone de crayon"
+                        alt=""
                     />
                     <p className={styles.textButton}>Modifier</p>
                 </button>

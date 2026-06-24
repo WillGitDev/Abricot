@@ -1,7 +1,7 @@
 :root {
   /* --------Colors -------- */
   --orange-light: #ffe8d9;
-  --orange-dark: #d3590b;
+  --orange-dark: #a8480a;
   --green-light: #f1fff7;
   --green: #27ae60;
   --red-light: #ffe0e0;
@@ -11,7 +11,7 @@
   --blue-light: #e0ecff;
   --blue: #3b82f6;
   --grey-light: #e5e7eb;
-  --grey: #6b7280;
+  --grey: #434549;
   --background-grey: #f9fafb;
   /* --------Border Radius -------- */
   --radius-sm: 4px;

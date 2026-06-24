@@ -23,7 +23,7 @@
 .contributorsTxt{
     font-weight: var(--font-weight-regular);
     font-size: var(--font-size-lg);
-    color: var(--grey);
+    color: #4b5563;
 }
 
 @media(max-width: 480px){

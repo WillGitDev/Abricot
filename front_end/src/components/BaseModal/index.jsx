@@ -11,6 +11,7 @@ export default function BaseModal({
     setIsOpen,
     title,
     imgSrc,
+    description = 'Fenêtre de dialogue',
     children,
 }) {
     return (
@@ -18,10 +19,7 @@ export default function BaseModal({
             <Dialog.Portal>
                 <Dialog.Overlay className={styles.modalOverlay} />
 
-                <Dialog.Content
-                    className={styles.modalContent}
-                    aria-describedby="dialog-description"
-                >
+                <Dialog.Content className={styles.modalContent}>
                     <div className={styles.headerRow}>
                         <Dialog.Title className={styles.modalTitle}>
                             {imgSrc ? (
@@ -29,7 +27,7 @@ export default function BaseModal({
                                     src={imgSrc}
                                     width={20}
                                     height={20}
-                                    alt="image logo"
+                                    alt=""
                                 />
                             ) : (
                                 ''
@@ -48,6 +46,10 @@ export default function BaseModal({
                             </button>
                         </Dialog.Close>
                     </div>
+
+                    <Dialog.Description className={styles.srOnly}>
+                        {description}
+                    </Dialog.Description>
 
                     <div className={styles.modalBody}>{children}</div>
                 </Dialog.Content>

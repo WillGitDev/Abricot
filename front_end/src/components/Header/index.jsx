@@ -20,7 +20,7 @@ export default function Header() {
     return (
         <header className={styles.containerHeader}>
             <div className={styles.logo}>
-                <Image src="/logo.svg" alt="Logo" width={150} height={20} />
+                <Image src="/logo.svg" alt="Abricot" width={150} height={20} />
             </div>
             <div className={styles.containerButton}>
                 <Link
@@ -29,7 +29,7 @@ export default function Header() {
                 >
                     <Image
                         src="/logo_carre.svg"
-                        alt="Logo"
+                        alt=""
                         width={24}
                         height={24}
                         className={isActiveDashboard ? styles.activeLogo : ''}
@@ -42,7 +42,7 @@ export default function Header() {
                 >
                     <Image
                         src="/logo_file.svg"
-                        alt="logo"
+                        alt=""
                         width={23}
                         height={30}
                         className={isActiveProjects ? styles.activeLogo : ''}

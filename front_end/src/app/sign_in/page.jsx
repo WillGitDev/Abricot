@@ -41,7 +41,12 @@ export default function Signin() {
     return (
         <div className={styles.container}>
             <div className={styles.containerForm}>
-                <Image src="/logo.svg" alt="Logo" height={32} width={250} />
+                <Image
+                    src="/logo.svg"
+                    alt="logo du site Abricot"
+                    height={32}
+                    width={250}
+                />
                 {error && <div className={styles.error}>{error}</div>}
                 <form className={styles.form} onSubmit={handleSubmit}>
                     <fieldset className={styles.fieldset}>
@@ -81,7 +86,6 @@ export default function Signin() {
                         >
                             <span className={styles.connectWord}>
                                 {isLoading ? 'Inscription...' : "S'inscrire"}
-                                S'inscrire
                             </span>
                         </button>
                     </fieldset>

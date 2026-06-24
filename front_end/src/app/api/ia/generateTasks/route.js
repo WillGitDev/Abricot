@@ -12,37 +12,52 @@ export async function POST(request) {
         });
         const body = await request.json();
         const { prompt, existingTasks } = body;
-        if (!prompt || !existingTasks || existingTasks.length === 0) {
+        if (!prompt || !existingTasks) {
             return NextResponse.json(
                 { message: 'Information manquante' },
                 { status: 400 }
             );
         }
+        const structuredPrompt = `
+        ### Tu es un expert en organisation pour découper un projet en tâches.
+        ### Objectif: À partir de la demande de l'utilisateur et des tâches, propose au minimum 3 tâches en lien avec les autres tâches sauf si la demande de l'utilisateur spécifie un nombre de tâches.
+        ### Voici le prompt de l'utilisateur : ${prompt}
+        ###Contraintes :
+        _ Réponds en français.
+        _ Le title et la description sont obligatoires, avec une limite minimale de deux caractères.
+        _ Utilise les tâches existantes comme référence pour le style, le vocabulaire.
+        _ Ne duplique pas les tâches existantes.
+        _ Réponds UNIQUEMENT avec ce format JSON, sans aucun autre caractère.
+        [
+            {
+                "title": "...",
+                "description": "..."
+                }
+                ]
+                `;
         const documents = existingTasks.map(
             (task) =>
                 new Document({
                     text: `
-            Titre: ${task.title} Description: ${task.description}`,
+                    Titre: ${task.title} Description: ${task.description}`,
                 })
         );
-        const index = await VectorStoreIndex.fromDocuments(documents);
-        const queryEngine = index.asQueryEngine();
-        const structuredPrompt = `
-            ### Voici le prompt de l'utilisateur : ${prompt}
-            ### Je veux qu'avec le prompt de l'utilisateur et 
-            les tâches similaires que tu as reçu ou pas, que tu me fais,
-            une réponse structurée en JSON de ce format uniquement sans aucun
-            autre caractère : 
-            [
-                {
-                    "title": "...",
-                    "description": "..."
-                }
-            ]
-            
-        `;
-        const response = await queryEngine.query({ query: structuredPrompt });
-        const responseText = response.toString();
+
+        let responseText;
+        if (existingTasks.lenght > 0) {
+            const index = await VectorStoreIndex.fromDocuments(documents);
+            const queryEngine = index.asQueryEngine();
+            const response = await queryEngine.query({
+                query: structuredPrompt,
+            });
+            responseText = response.toString();
+        } else {
+            const response = await Settings.llm.complete({
+                prompt: structuredPrompt,
+            });
+            responseText = response.text;
+        }
+
         const responseJson = () => {
             const start = responseText.indexOf('[');
             const end = responseText.lastIndexOf(']') + 1;

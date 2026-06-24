@@ -9,17 +9,17 @@
 }
 
 .todo{
-    color: var(--red);
+    color: #b91c1c;
     background-color: var(--red-light);
 }
 
 .inProgress{
-    color: var(--orange);
+    color: var(--orange-dark);
     background-color: var(--orange-medium);
 }
 
 .done{
-    color: var(--green);
+    color: #15803d;
     background-color: var(--green-light);
 }
 
@@ -29,7 +29,7 @@
 }
 
 .user{
-    color: var(--grey);
+    color: #4b5563;
     background-color: var(--grey-light);
 }
 

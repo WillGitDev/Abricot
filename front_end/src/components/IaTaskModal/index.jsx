@@ -9,6 +9,7 @@ import CardIaTask from '@components/CardIaTask';
 import useCreateTask from '@/hooks/useCreateTask';
 import ModifyTaskIaModal from '@components/ModifyTaskIaModal';
 import { toast } from 'sonner';
+import Loader from '@components/Loader';
 
 export default function IaTaskModal({
     isOpen,
@@ -38,6 +39,7 @@ export default function IaTaskModal({
         } else {
             toast.error('Échec lors de la création de la tâche');
         }
+        setDescription('');
     };
 
     const handleDeleteIaTask = (index) => {
@@ -119,6 +121,7 @@ export default function IaTaskModal({
                     </div>
                 )}
                 <form onSubmit={handleSubmit}>
+                    {isLoading && <Loader />}
                     <div className={styles.containerInput}>
                         {error && <p>{error}</p>}
                         <label htmlFor="description" className={styles.srOnly}>
@@ -133,18 +136,18 @@ export default function IaTaskModal({
                             onChange={(e) => setDescription(e.target.value)}
                             placeholder="Décrivez les tâches que vous souhaitez ajouter..."
                         />
-                        <button type="submit" className={styles.submitButton}>
-                            {isLoading ? (
-                                'Chargement en cours'
-                            ) : (
-                                <Image
-                                    src="/star_white.svg"
-                                    width={8}
-                                    height={8}
-                                    alt="logo ia"
-                                    className={styles.iaLogo}
-                                />
-                            )}
+                        <button
+                            type="submit"
+                            className={styles.submitButton}
+                            disabled={isLoading}
+                        >
+                            <Image
+                                src="/star_white.svg"
+                                width={8}
+                                height={8}
+                                alt="logo ia"
+                                className={styles.iaLogo}
+                            />
                         </button>
                     </div>
                 </form>

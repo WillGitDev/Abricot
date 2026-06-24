@@ -62,10 +62,14 @@ export default function SelectOptions({
         <div className={styles.container}>
             <button
                 type="button"
+                role="combobox"
                 aria-haspopup="listbox"
                 aria-expanded={isOpen}
-                aria-activedescendant={`option-${selectedIndex}`}
+                aria-activedescendant={
+                    isOpen ? `option-${selectedIndex}` : undefined
+                }
                 aria-labelledby={ariaLabelledBy}
+                aria-label={ariaLabelledBy ? undefined : label}
                 onKeyDown={handleKeyDown}
                 onClick={() => setIsOpen(!isOpen)}
                 className={`${styles.listBoxButton} ${isOpen ? styles.buttonOpen : ''}`}
