@@ -1,7 +1,7 @@
 .long{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    height: 160px;
+    min-height: 160px;
     width: 100%;
     padding: 20px;
     border: 1px solid var(--grey-light);
@@ -11,8 +11,8 @@
 .carre{
     display: grid;
     grid-template-columns: 2fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    height: 300px;
+    grid-template-rows: 3fr 1fr 1fr;
+    /* height: 300px; */
     width: 370px;
     border: 1px solid var(--grey-light);
     border-radius: var(--radius-lg);

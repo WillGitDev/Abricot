@@ -44,7 +44,7 @@ export async function POST(request) {
         );
 
         let responseText;
-        if (existingTasks.lenght > 0) {
+        if (existingTasks.length > 0) {
             const index = await VectorStoreIndex.fromDocuments(documents);
             const queryEngine = index.asQueryEngine();
             const response = await queryEngine.query({
