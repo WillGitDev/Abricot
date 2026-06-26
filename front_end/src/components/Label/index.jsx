@@ -23,9 +23,17 @@ export default function Label({ tag, fullName, onClick, isActive }) {
 
     return (
         <div
+            tabIndex={0}
+            role="button"
+            aria-pressed={isActive}
             className={`${styles.container} ${colorLabel()} 
             ${isActive ? styles.active : ''}`}
-            onClick={onClick}
+            onKeyDown={(e) => {
+                if(e.key === 'Enter' || e.key === '') {
+                    e.preventDefault();
+                    onClick();
+                  }
+            }}
         >
             <p className={styles.label}>{tag}</p>
         </div>

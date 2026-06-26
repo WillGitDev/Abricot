@@ -17,11 +17,13 @@
 .h2{
     font-weight: var(--font-weight-medium);
     font-size: var(--font-size-xl);
+    font-family: var(--font-manrope);
 }
 .h2Subtitle{
     color: var(--grey);
     font-weight: var(--font-weight-regular);
     font-size: var(--font-size-md);
+    font-family: var(--font-inter);
 }
 
 .searchBar{

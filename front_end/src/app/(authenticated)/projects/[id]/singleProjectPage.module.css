@@ -27,14 +27,14 @@
 .containerTitleProject{
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
 }
 
 .buttonModifyProject{
     background: none;
     border: none;
     color: var(--orange-dark);
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-ms);
     text-decoration: underline;
     cursor: pointer;
 }
@@ -45,14 +45,15 @@
 
 .h2{
     font-weight: var(--font-weight-medium);
-    font-size: var(--font-size-xl);
-    
+    font-size: var(--font-size-xxl);
+    font-family: var(--font-manrope);
 }
 
 .h3{
     font-weight: var(--font-weight-regular);
-    font-size: var(--font-size-);
+    font-size: var(--font-size-xl);
     color: var(--grey);
+
 }
 
 .buttonCreateTask{
@@ -174,6 +175,7 @@
     background-color: transparent;
     color: var(--orange-dark);
     text-decoration: underline;
+    font-size: var(--font-size-ms);
 }
 
 @media(max-width: 768px){

@@ -18,6 +18,7 @@
 .titleProject{
     font-weight: var(--font-weight-medium);
     font-size: var(--font-size-xl);
+    font-family: var(--font-manrope);
 }
 
 .description{

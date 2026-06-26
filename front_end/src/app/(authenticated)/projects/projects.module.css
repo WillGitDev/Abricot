@@ -12,8 +12,13 @@
 
 .h1{
     font-weight: var(--font-weight-medium);
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-xxl);
+    font-family: var(--font-manrope);
     margin-bottom: 20px;
+}
+
+.subtitle{
+    font-size: var(--font-size-xl);
 }
 
 .containerProject{

@@ -1,6 +1,6 @@
 'use client';
 
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, notFound } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import useDeleteProject from '@/hooks/useDeleteProject';
 import useDeleteTask from '@/hooks/useDeleteTask';
@@ -48,10 +48,14 @@ export default function SingleProjectPage() {
     if (isLoadingTasksId) return <Loader />;
 
     if (isLoadingAllProjects) return <Loader />;
-
+    
     const currentProject = allProjects.find(
         (project) => project.id === projectId
     );
+
+    if(!currentProject){
+        notFound();
+    }
     const isAdmin = currentProject.userRole === 'ADMIN';
     const allMembers = [
         { user: currentProject.owner, role: 'OWNER' },

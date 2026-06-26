@@ -30,7 +30,7 @@
   /* 18px */
   --font-size-xl: 1.125rem;
   /* 24px */
-  --font-size-xl: 1.5rem;
+  --font-size-xxl: 1.5rem;
   /* 40px */
   --font-size-xxxl: 2.5rem; 
   /* --------Font Weights -------- */
@@ -54,7 +54,7 @@ body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--background-grey);

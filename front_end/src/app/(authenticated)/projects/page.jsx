@@ -29,7 +29,7 @@ export default function Projects() {
                 <div className={styles.containerTopBar}>
                     <div className={styles.containerTitle}>
                         <h1 className={styles.h1}>Mes projets</h1>
-                        <p>Gérer vos projets</p>
+                        <p className={styles.subtitle}>Gérer vos projets</p>
                     </div>
                 </div>
                 <button
